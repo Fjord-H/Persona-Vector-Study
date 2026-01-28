@@ -4,11 +4,11 @@ Interactive dashboard for visualizing self-monitoring research results.
 
 ## Features
 
-- 📊 **Overview:** Key metrics and discoveries
-- 🤖 **Model Comparison:** GPT-2 vs Qwen performance
-- 🧪 **Experimental Results:** Detailed accuracy metrics
-- 📈 **Layer Analysis:** Layer-by-layer signal strength
-- 🎯 **Interactive Demo:** Test queries in real-time
+- **Overview:** Key metrics and discoveries
+- **Model Comparison:** GPT-2 vs Qwen performance
+- **Experimental Results:** Detailed accuracy metrics
+- **Layer Analysis:** Layer-by-layer signal strength
+- **Interactive Demo:** Test queries in real-time
 
 ## Installation
 
@@ -74,4 +74,5 @@ This dashboard is perfect for:
 - Research presentations
 - Job interviews
 - Portfolio demonstrations
+
 - Teaching AI safety concepts
