@@ -270,6 +270,9 @@ def evaluate_self_monitoring(model, queries, labels):
 - **Layer 23: Highest separation** (0.004905)
 - Safety decision happens LATE in processing
 
+![GPT-2 Content-Based Results](figures/gpt2_content_breakthrough.png)
+*Left: Score distribution showing clear separation. Right: Content vectors (92.5%) vastly outperform tone vectors (38.5%)*
+
 **Performance with Content Vectors:**
 
 | Dataset | Accuracy | Notes |
@@ -293,6 +296,13 @@ def evaluate_self_monitoring(model, queries, labels):
 - **Layer 1: Massive separation spike** (0.257812)
 - Layers 2-26: Near-zero separation
 - Layer 27-28: Small secondary signal
+
+![Qwen Layer Discovery](figures/qwen_layer_discovery.png)
+*Layer 1 shows 52x stronger signal than GPT-2's best layer (Layer 23)*
+
+![Qwen Results](figures/qwen_breakthrough.png)
+*Left: Perfect 100% separation on standard queries. Right: Qwen dominates across all metrics*
+
 
 **This was striking:** Safety detection happens in the FIRST layer—before any deep semantic processing.
 
@@ -433,6 +443,25 @@ Despite limitations, we demonstrate:
 **This is a proof-of-concept, not a production-ready system.**
 
 ---
+
+## Visualizations
+
+### Vector Analysis
+
+![GPT-2 Tone Vector](figures/gpt2_tone_vector.png)
+*GPT-2 Layer 6 tone vector showing distribution across 1024 dimensions*
+
+![GPT-2 Vector Dimensions](figures/gpt2_vector_dimensions.png)
+*Detailed analysis: Full vector, distribution, and top 20 most important dimensions*
+
+### Key Findings
+
+All visualizations demonstrate:
+1. **Clear separation** between safe and dangerous content
+2. **Architectural differences** between base and instruction-tuned models
+3. **Effectiveness of content-based approach** over tone-based
+
+See `figures/` directory for all generated plots.
 
 ## The "Discipline vs Lobotomy" Paradigm
 
