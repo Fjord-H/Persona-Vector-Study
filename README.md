@@ -633,70 +633,24 @@ print(result)  # {"safe": False, "score": -0.015}
 
 ## Related Work
 
-This research builds on and extends:
+This research was inspired by:
+- **Anthropic's Persona Vectors** ([DeepLearning.AI](https://www.deeplearning.ai/the-batch/...)) - Original methodology
+- **Activation Steering** - Techniques for analyzing model internals
+- **Mechanistic Interpretability** - Understanding neural network representations
 
-- **Anthropic's Persona Vectors** ([DeepLearning.AI](https://www.deeplearning.ai/the-batch/identifying-persona-vectors-allows-ai-model-builders-to-edit-out-sycophancy-hallucinations-and-more/)) - Original inspiration for vector-based behavior analysis
-- **Activation Steering** (Turner et al., 2023) - Methodology for modifying model behavior via hidden states
-- **Mechanistic Interpretability** (Anthropic, 2023) - Understanding what neural networks learn internally
-- **AI Safety via Debate** (OpenAI, 2018) - Alternative approaches to safety verification
-
-**Our contribution:** Systematic comparison of tone vs. content approaches specifically for safety applications, with cross-model architectural analysis.
+**Our contribution:** Systematic comparison of tone vs. content vectors for safety detection.
 
 ---
 
 ## Contributing
 
-We welcome contributions! Areas where you can help:
-
-- Replicate experiments on additional models
-- Expand datasets with more diverse queries
-- Adversarial testing - try to break the system
-- Documentation improvements
-- Code optimization and refactoring
-
----
-
-## Contact & Collaboration
-
-**Researcher:** Fjord  
-**Looking for:** ML Safety Researcher / AI Alignment Engineer positions  
-**Target companies:** Anthropic, OpenAI, DeepMind, Cohere, Safety-focused AI labs
-
-**Interested in:**
-- AI safety mechanisms
-- Mechanistic interpretability  
-- Production ML systems
-- Cross-model generalization
-
-**Portfolio:** [GitHub Link]  
-**LinkedIn:** [Profile Link]  
-**Email:** [Contact Email]
-
-**Open to:** Research collaborations, job opportunities, technical discussions
-
----
-
-## Citation
-
-If you use this work in your research, please cite:
-
-```bibtex
-@misc{fjord2026selfmonitoring,
-  title={Persona Vectors for Self-Monitoring: A Content-Based Approach to AI Safety},
-  author={Fjord},
-  year={2026},
-  howpublished={\url{https://github.com/your-username/persona-vectors-research}},
-  note={Exploring content-based vs. tone-based safety detection in transformer models}
-}
-```
+This is a proof-of-concept portfolio project. Feel free to fork and extend!
 
 ---
 
 ## License
-
-MIT License - See `LICENSE` file for details.
-
-**Summary:** Free to use, modify, and distribute with attribution.
+   
+This research is shared for educational purposes. Feel free to use and adapt with attribution.
 
 ---
 
@@ -704,7 +658,6 @@ MIT License - See `LICENSE` file for details.
 
 This research was made possible by:
 - **Anthropic's** groundbreaking work on persona vectors and mechanistic interpretability
-- **Hugging Face** for model access and transformers library
 - **The open-source community** for tools and infrastructure
 - **Collaborative problem-solving** through iterative experimentation
 
@@ -712,10 +665,6 @@ Special thanks to those who provided feedback and encouragement throughout this 
 
 ---
 
-**Last Updated:** January 27, 2026  
+**Last Updated:** January 29, 2026  
 **Status:** Proof-of-concept complete | Limited-scope findings | Open for expansion  
 **Next milestone:** Scaling to 500+ examples and 5+ models
-
----
-
-*"Sometimes the most important research finding is discovering what doesn't work—and understanding why."*
