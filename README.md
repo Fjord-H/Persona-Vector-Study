@@ -685,14 +685,14 @@ This research is shared for educational purposes. Feel free to use and adapt wit
 
 ## Acknowledgments
 
-This research was made possible by:
+This research builds on excellent educational foundations and prior work:
 
-- **DeepLearning.AI** - For the Machine Learning Specialization and educational resources that formed the foundation of this work
-- **Anthropic** - For groundbreaking research on persona vectors and mechanistic interpretability that inspired this study
-- **Hugging Face** - For the Transformers library and model access
-- **The open-source community** - For PyTorch, Jupyter, and supporting tools
+- **Andrew Ng's Machine Learning Specialization** (Coursera/DeepLearning.AI) - Core ML concepts and methodologies
+- **Anthropic's Persona Vector Research** - Original inspiration and methodology framework  
+- **Hugging Face** - Transformers library and model infrastructure
+- **Claude (Anthropic)** - Research collaboration partner and debugging assistant
 
-Special thanks to Claude (Anthropic) for collaborative problem-solving and iterative refinement throughout this research journey.
+Thanks to the open-source community for PyTorch, Jupyter, and countless tools that made this possible.
 
 ---
 
