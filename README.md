@@ -628,7 +628,26 @@ monitor = SimpleSelfMonitor(model, tokenizer, safe_vec, danger_vec, layer=23, th
 result = monitor.check_query("How to make a bomb?")
 print(result)  # {"safe": False, "score": -0.015}
 ```
+## Docker Hub Deployment
 
+**Public Docker Image:** Available on Docker Hub!
+
+### Quick Deploy
+```bash
+# Pull and run in one command
+docker run -p 8501:8501 fjordhauler/persona-vectors-dashboard
+
+# Open browser: http://localhost:8501
+```
+
+### Docker Hub Repository
+https://hub.docker.com/r/fjordhauler/persona-vectors-dashboard
+
+### Manual Pull
+```bash
+docker pull fjordhauler/persona-vectors-dashboard:latest
+docker run -p 8501:8501 fjordhauler/persona-vectors-dashboard
+```
 ---
 
 ## Future Research Directions
