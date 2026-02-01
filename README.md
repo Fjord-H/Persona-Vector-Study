@@ -545,8 +545,10 @@ persona-vectors-research/
 ├── dashboard.py
 ├── dashboard_requirements.txt
 │
+├── Dockerfile
+├── .dockerignore
+├── .gitignore
 ├── README.md                                  # This file
-├── requirements.txt                           # Dependencies
 └── LICENSE                                    # MIT License
 ```
 
