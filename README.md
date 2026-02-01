@@ -699,8 +699,10 @@ This is a proof-of-concept portfolio project. Feel free to fork and extend!
 ---
 
 ## License
-   
-This research is shared for educational purposes. Feel free to use and adapt with attribution.
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+**Summary:** Free to use, modify, and distribute with attribution.
 
 ---
 
