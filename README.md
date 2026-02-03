@@ -1,19 +1,128 @@
-# Persona Vectors for Self-Monitoring: A Content-Based Approach to AI Safety
+# Persona Vectors for AI Safety Detection
 
-*Exploring whether language models can detect dangerous content through internal activation analysis*
+**Investigating self-monitoring capabilities in language models through activation-space analysis**
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red)](https://pytorch.org/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Dashboard](https://img.shields.io/badge/Demo-Streamlit-ff4b4b)](Dashboard.py)
+
+> Can language models detect their own dangerous outputs by comparing activation patterns against learned "persona vectors"? This research demonstrates proof-of-concept self-monitoring achieving 74.4% accuracy with minimal training data.
+
+**Key Achievement:** Qwen2.5-1.5B reached 74.4% accuracy (Layer 27) using only 200 training examples.
+
+---
+
+## Quick Results
+
+| Model | Architecture | Best Layer | Accuracy | Training Examples |
+|-------|--------------|------------|----------|-------------------|
+| **Qwen2.5-1.5B** | Instruction-tuned | Layer 27 (Final) | **74.4%** | 200 |
+| **Llama-3.2-3B** | Instruction-tuned | Layer 7 (Mid) | 67.8% | 200 |
+| **GPT-2 Medium** | Base model | Layer 0 (Embeddings) | 64.2% | 200 |
+
+**Baseline:** 50% (random guessing on balanced dataset)
+
+**Novel Finding:** Different models encode safety signals in different architectural layers, revealing distinct RLHF training strategies.
+
+![Model Comparison](figures/model_comparison.png)
+*Figure 1: Performance comparison across three architectures. Qwen2.5-1.5B achieves highest accuracy (74.4%) using final layer (Layer 27), while Llama-3.2-3B peaks at middle layers (Layer 7), revealing different RLHF training strategies.*
+
+---
+
+## What We Discovered
+
+### 1. **Self-Monitoring Works**
+Language models can detect dangerous queries by comparing activations against learned "safe" and "dangerous" patterns, achieving 64-74% accuracy without external classifiers.
+
+### 2. **Architecture Matters**
+```
+┌─────────────────┬──────────────┬─────────────────┐
+│ Model Type      │ Best Layer   │ Pattern         │
+├─────────────────┼──────────────┼─────────────────┤
+│ Base (GPT-2)    │ Embeddings   │ Raw token space │
+│ RLHF (Qwen)     │ Final output │ Decision layer  │
+│ RLHF (Llama)    │ Middle layer │ Processing flow │
+└─────────────────┴──────────────┴─────────────────┘
+```
+
+**Insight:** Instruction-tuned models concentrate safety in architectural extremes (very early or very late layers), while base models rely on embeddings.
+
+![Layer Analysis](figures/layer_analysis.png)
+*Figure 2: Layer-by-layer accuracy for GPT-2 and Qwen. GPT-2 (base model) peaks at embeddings (Layer 0), while Qwen (instruction-tuned) peaks at final output (Layer 27).*
+
+### 3. **Data Efficiency**
+```
+Training Size Impact:
+50 examples  → 60% accuracy (proof-of-concept)
+200 examples → 74% accuracy (production-viable)
+
+Diminishing returns observed beyond 200 examples with
+current architecture (simple mean vectors).
+
+![Training Size Impact](figures/training_progression.png)
+*Figure 3: Performance improvement from 50 to 200 training examples. Qwen shows dramatic +12% improvement, while GPT-2 shows modest +4% gain, highlighting instruction-tuned models benefit more from additional training data.*
+```
+
+### 4. **What Didn't Work**
+- **Steering vectors**: Lost information vs. two-vector approach (-5%)
+- **Multi-layer ensemble**: Best single layer outperformed combinations (Layer 27 alone > ensemble)
+- **Per-category detection**: Required 500+ examples per category; public datasets had wrong format (descriptive vs. instruction-seeking)
+- **Confidence weighting**: No improvement over simple mean vectors
+
+**These failures are valuable science** - they validate our successful approaches and guide future work.
+
+---
+
+## Research Progression
+
+### Phase 1: Proof of Concept (Notebook 02)
+- **Goal:** Can models self-monitor at all?
+- **Method:** 50 training examples, small test set
+- **Result:** 92.5% GPT-2, 100% Qwen (too good to be true!)
+- **Learning:** Small test sets overfit - need larger evaluation
+
+### Phase 2: Reality Check (Notebook 03) 
+- **Goal:** Test on diverse, real-world data
+- **Method:** 2000-example test set (RealToxicity + ToxiGen)
+- **Result:** 65% GPT-2, 72% Qwen (honest performance)
+- **Learning:** Initial results were overfitted; larger dataset gives realistic baseline
+
+### Phase 3: Scale Training Data (Notebook 04) 
+- **Goal:** Improve with more training examples
+- **Method:** 50 → 200 training examples
+- **Result:** +4% GPT-2, +12% Qwen
+- **Learning:** Instruction-tuned models benefit dramatically from more data
+
+### Phase 4: Architecture Analysis (Notebook 05) 
+- **Goal:** Find optimal layers across all architectures
+- **Method:** Comprehensive 24-28 layer testing
+- **Result:** Layer 0 (GPT-2), Layer 27 (Qwen) best
+- **Learning:** Different models use different layers for safety
+
+### Phase 5: Cross-Model Validation (Notebook 06) 
+- **Goal:** Validate findings on third architecture
+- **Method:** Test Llama-3.2-3B
+- **Result:** 67.8% (Layer 7 - middle layers!)
+- **Learning:** Meta's RLHF strategy differs from Alibaba's
+
+### Phase 6: Advanced Methods (Notebook 05) 
+- **Tested:** Steering vectors, ensembles, per-category
+- **Result:** All performed worse than simple two-vector approach
+- **Learning:** Simplicity wins; complexity doesn't help with limited data
 
 ---
 
 ## Abstract
 
-This research investigates whether transformer language models can perform self-monitoring for safety detection by analyzing their own internal activations—eliminating the need for external classifiers. Inspired by [Anthropic's work on persona vectors](https://www.deeplearning.ai/the-batch/identifying-persona-vectors-allows-ai-model-builders-to-edit-out-sycophancy-hallucinations-and-more/), we systematically explored how safety-related behaviors are encoded in model representations.
+This research investigates whether transformer language models can perform self-monitoring for safety detection by analyzing their own internal activations, eliminating the need for external classifiers. Inspired by [Anthropic's work on persona vectors](https://www.deeplearning.ai/the-batch/identifying-persona-vectors-allows-ai-model-builders-to-edit-out-sycophancy-hallucinations-and-more/), we systematically explored how safety-related behaviors are encoded in model representations.
 
-Through experimentation with GPT-2 Medium and Qwen2.5-1.5B-Instruct, we discovered a critical distinction: **persona-conditioned vectors capture conversational tone rather than content-level safety**. By shifting to content-based vector extraction, we achieved promising results on small validation sets, with different architectural patterns emerging between base and instruction-tuned models.
+Through experimentation with GPT-2 Medium, Qwen2.5-1.5B-Instruct, and Llama-3.2-3B, we discovered a critical distinction: **persona-conditioned vectors capture conversational tone rather than content-level safety**. By shifting to content-based vector extraction, we achieved promising results on small validation sets, with different architectural patterns emerging between base and instruction-tuned models.
 
-While preliminary and limited in scope (50 training examples, 2 models), these findings suggest self-monitoring is viable for certain safety applications and reveal how RLHF training fundamentally restructures where safety decisions occur within transformer architectures.
+While preliminary and limited in scope (200 training examples, 3 models), these findings suggest self-monitoring is viable for certain safety applications and reveal how RLHF training fundamentally restructures where safety decisions occur within transformer architectures.
 
-**Research Period:** December 2025 - January 2026  
-**Models Tested:** GPT-2 Medium (345M), Qwen2.5-1.5B-Instruct  
+**Research Period:** December 2025 - February 2026  
+**Models Tested:** GPT-2 Medium (345M), Qwen2.5-1.5B-Instruct, Llama-3.2-3B-Instruct
 **Code & Data:** Available in this repository
 
 ---
@@ -465,6 +574,7 @@ See `figures/` directory for all generated plots.
 
 ## The "Discipline vs Lobotomy" Paradigm
 
+
 ### Three Approaches to AI Safety
 
 Our research reveals a fundamental trade-off in safety mechanisms:
@@ -524,6 +634,7 @@ This combines:
 - Speed (self-monitoring at Layer 1)
 - Understanding (constitutional reasoning)
 - Robustness (external validation)
+
 ## Repository Structure
 
 ```
@@ -533,14 +644,16 @@ persona-vectors-research/
 │   ├── 01_GPT2_Vector_Extraction.ipynb        # Tone vector baseline (GPT-2)
 │   ├── 01a_Qwen_Vector_Extraction.ipynb       # Tone vector baseline (Qwen)
 │   ├── 02_Self_Monitoring_Experiment.ipynb    # Initial self-monitoring tests
-│   └── 02a_Qwen_Content_Vectors.ipynb         # Breakthrough: Content-based approach
+│   ├── 02a_Qwen_Content_Vectors.ipynb         # Breakthrough: Content-based approach
+│   ├── 03_extended_evaluation.ipynb           # Large-scale testing (2000 examples)
+│   ├── 04_improved_training.ipynb             # Scaled training data (200 examples)
+│   ├── 05_weighted_ensemble.ipynb             # Layer analysis & ensemble methods
+│   └── 06_llama_evaluation.ipynb              # Cross-model validation (Llama)
 │
 ├── data/
 │   ├── vectors/                               # Extracted safety vectors (.pkl)
 │   ├── results/                               # Experimental results (.csv)
-│   └── training/                              # Training query datasets (.json)
-│
-├── figures/                                   # Visualizations & plots
+│   └── figures/                               # Visualizations (.png)
 │
 ├── dashboard.py
 ├── dashboard_requirements.txt
@@ -560,76 +673,51 @@ persona-vectors-research/
 
 ### Quick Start
 
+### Prerequisites
 ```bash
+# Python 3.8+
+# CUDA-capable GPU (recommended)
+# 16GB+ RAM
+```
+
+### Installation
+```bash
+# Clone repository
+git clone https://github.com/yourusername/persona-vectors
+cd persona-vectors
+
 # Install dependencies
 pip install -r requirements.txt
 
-# Run interactive dashboard
-streamlit run dashboard.py
+# Download models (first run only)
+python -c "from transformers import AutoModel; AutoModel.from_pretrained('gpt2-medium')"
+python -c "from transformers import AutoModel; AutoModel.from_pretrained('Qwen/Qwen2.5-1.5B-Instruct')"
+```
 
-# Or explore notebooks
+### Run Notebooks
+```bash
+# Start Jupyter
 jupyter notebook
+
+# Open notebooks in order:
+# 01_GPT2_Vector_Extraction.ipynb        - Tone vector baseline (GPT-2)
+# 01a_Qwen_Vector_Extraction.ipynb       - Tone vector baseline (Qwen)
+# 02_Self_Monitoring_Experiment.ipynb    - Initial self-monitoring tests
+# 02a_Qwen_Content_Vectors.ipynb         - Breakthrough: Content-based approach
+# 03_extended_evaluation.ipynb           - Large-scale testing
+# 04_improved_training.ipynb             - Scale training data
+# 05_weighted_ensemble.ipynb             - Architecture analysis
+# 06_llama_evaluation.ipynb              - Cross-model validation
 ```
 
-### Extracting Content Vectors
+### Launch Dashboard
+```bash
+# Interactive demo
+streamlit run Dashboard.py
 
-```python
-# Load model
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-model = AutoModelForCausalLM.from_pretrained("gpt2-medium")
-tokenizer = AutoTokenizer.from_pretrained("gpt2-medium")
-
-# Define queries
-safe_queries = ["What are cookies?", "Explain gravity", ...]
-dangerous_queries = ["How to make poison?", "How to hack?", ...]
-
-# Extract activations
-def get_activation(query, layer_idx):
-    inputs = tokenizer(query, return_tensors="pt")
-    outputs = model(**inputs, output_hidden_states=True)
-    return outputs.hidden_states[layer_idx].mean(dim=1)
-
-# Create safety vector
-safe_vecs = [get_activation(q, layer=23) for q in safe_queries]
-danger_vecs = [get_activation(q, layer=23) for q in dangerous_queries]
-
-safety_vector = torch.stack(safe_vecs).mean(dim=0) - torch.stack(danger_vecs).mean(dim=0)
+# Opens at http://localhost:8501
 ```
 
-### Self-Monitoring Class
-
-```python
-class SimpleSelfMonitor:
-    def __init__(self, model, tokenizer, safe_vec, danger_vec, layer, threshold):
-        self.model = model
-        self.tokenizer = tokenizer
-        self.safe_vector = safe_vec
-        self.danger_vector = danger_vec
-        self.layer = layer
-        self.threshold = threshold
-    
-    def check_query(self, text):
-        # Get activation
-        inputs = self.tokenizer(text, return_tensors="pt")
-        outputs = self.model(**inputs, output_hidden_states=True)
-        activation = outputs.hidden_states[self.layer].mean(dim=1)
-        
-        # Compare to safety vectors
-        safe_sim = torch.cosine_similarity(activation, self.safe_vector, dim=1).item()
-        danger_sim = torch.cosine_similarity(activation, self.danger_vector, dim=1).item()
-        
-        # Decision
-        score = safe_sim - danger_sim
-        is_safe = score > self.threshold
-        
-        return {"safe": is_safe, "score": score}
-
-# Usage
-monitor = SimpleSelfMonitor(model, tokenizer, safe_vec, danger_vec, layer=23, threshold=-0.005)
-result = monitor.check_query("How to make a bomb?")
-print(result)  # {"safe": False, "score": -0.015}
-```
 ## Docker Hub Deployment
 
 **Public Docker Image:** Available on Docker Hub!
@@ -652,39 +740,76 @@ docker run -p 8501:8501 fjordhauler/persona-vectors-dashboard
 ```
 ---
 
-## Future Research Directions
 
-### Immediate Next Steps
-1. **Expand dataset** to 500-1000 examples for more robust evaluation
-2. **Test additional models** (Llama, Mistral, Claude, GPT-4)
-3. **Multi-layer consensus** - combine signals from multiple layers for better robustness
-4. **Semantic fallback** - add contextual understanding for edge cases
+## Technical Details
 
-### Longer-Term Research
-1. **Transfer learning** - Can GPT-2 vectors work on Llama? Cross-model generalization
-2. **Adversarial robustness** - Systematic red-teaming and defense mechanisms  
-3. **Multi-category classification** - Beyond binary (violence, hate speech, misinformation, etc.)
-4. **Real-time deployment** - Integration with production systems and A/B testing
+### The Two-Vector Method
+```python
+# Extract mean activations from training data
+safe_vector = mean([model(query) for query in safe_examples])
+danger_vector = mean([model(query) for query in dangerous_examples])
 
-### Ambitious Vision
-**Goal:** Develop a modular post-transformer safety module that:
-- Processes final hidden states
-- Makes real-time safety decisions (<5ms latency)
-- Updates independently from base model
-- Maintains 95%+ accuracy across diverse threats
+# Test new query
+query_activation = model(new_query)
+safe_similarity = cosine(query_activation, safe_vector)
+danger_similarity = cosine(query_activation, danger_vector)
 
-**This would enable:**
-- Faster inference than external classifiers
-- Easier safety updates (no full model retraining)
-- Better interpretability (can inspect decision process)
-- Scalable deployment across multiple models
+# Decision
+score = safe_similarity - danger_similarity
+prediction = "safe" if score > threshold else "dangerous"
+```
+
+**Why This Works:**
+1. **Activation space clustering:** Safe and dangerous queries create distinct activation patterns
+2. **Vector arithmetic:** Difference captures safety "direction"
+3. **Threshold optimization:** Adjusts decision boundary for best accuracy
+
+### Layer Selection Methodology
+
+**Tested all layers (24-28 depending on model):**
+1. Extract vectors from each layer
+2. Test on 1800-example held-out set
+3. Optimize threshold per layer
+4. Compare accuracy + vector separation
+
+**Finding:** Layer with highest optimized accuracy = best for detection
+
+### Threshold Optimization
+```
+Default threshold (0): Treats positive score as safe
+Optimized threshold: Found via grid search on validation set
+
+Example:
+GPT-2 optimal: -0.0176 (slight bias toward "dangerous")
+Qwen optimal: -0.0074 (well-calibrated)
+```
+
+---
+
+## Future Directions
+
+### Immediate Improvements (1-2 weeks)
+- [ ] **Expand training data:** 200 → 1000+ examples per category
+- [ ] **Fine-tune thresholds:** Per-category decision boundaries
+- [ ] **Hybrid approach:** Combine with existing safety APIs
+
+### Research Extensions (1-3 months)
+- [ ] **Multimodal safety:** Apply to image + text models
+- [ ] **Real-time steering:** Use vectors to guide generation away from danger
+- [ ] **Interpretability:** Visualize what neurons activate for safety signals
+- [ ] **Cross-lingual:** Test on non-English models
+
+### Long-term Vision (6+ months)
+- [ ] **Production deployment:** Integrate into LLM inference pipeline
+- [ ] **Adaptive vectors:** Vectors that update based on user feedback
+- [ ] **Mechanistic understanding:** Why do specific layers encode safety?
 
 ---
 
 ## Related Work
 
 This research was inspired by:
-- **Anthropic's Persona Vectors** ([DeepLearning.AI](https://www.deeplearning.ai/the-batch/...)) - Original methodology
+- **Anthropic's Persona Vectors** ([DeepLearning.AI](https://www.deeplearning.ai/the-batch/identifying-persona-vectors-allows-ai-model-builders-to-edit-out-sycophancy-hallucinations-and-more/)) - Original methodology
 - **Activation Steering** - Techniques for analyzing model internals
 - **Mechanistic Interpretability** - Understanding neural network representations
 
@@ -719,6 +844,6 @@ Thanks to the open-source community for PyTorch, Jupyter, and countless tools th
 
 ---
 
-**Last Updated:** January 29, 2026  
+**Last Updated:** February 3, 2026  
 **Status:** Proof-of-concept complete | Limited-scope findings | Open for expansion  
 **Next milestone:** Scaling to 500+ examples and 5+ models
