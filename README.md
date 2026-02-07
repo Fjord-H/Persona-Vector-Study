@@ -8,13 +8,19 @@
 
 This research investigates whether transformer language models can perform self-monitoring for safety detection by analyzing their own internal activations—eliminating the need for external classifiers. Inspired by [Anthropic's work on persona vectors](https://www.deeplearning.ai/the-batch/identifying-persona-vectors-allows-ai-model-builders-to-edit-out-sycophancy-hallucinations-and-more/), we systematically explored how safety-related behaviors are encoded in model representations.
 
-Through experimentation with GPT-2 Medium, Qwen2.5-1.5B-Instruct, and Llama-3.2-3B-Instruct, we discovered a critical distinction: **persona-conditioned vectors capture conversational tone rather than content-level safety**. By shifting to content-based vector extraction, we achieved promising results on small validation sets, with different architectural patterns emerging between base and instruction-tuned models.
+Through experimentation with GPT-2 Medium, Qwen 1.5B-Instruct, and Llama 3.2 3B-Instruct, we discovered a critical distinction: **persona-conditioned vectors capture conversational tone rather than content-level safety**. By shifting to content-based vector extraction with 200 training examples and rigorous evaluation on 1,800 test queries, we achieved 64-74% accuracy across all three models—demonstrating that self-monitoring is viable for safety applications.
 
-After experimenting with extended data (200 training examples, 1,800 test examples, and 3 models), the results suggest that self-monitoring is viable for certain safety applications. The findings also reveal that RLHF training fundamentally reshapes where safety decisions occur within transformer architectures, achieving 64–74% accuracy across models.
+**Key findings:**
+- Simple unweighted mean vectors outperform complex weighting schemes
+- Optimal layer varies by architecture: Layer 0 (GPT-2), Layer 27 (Qwen), Layer 7 (Llama)
+- RLHF training fundamentally reshapes where safety decisions occur within transformers
+- Multi-layer ensembles and per-category detection both hurt performance
 
-**Research Period:** December 2025 - Present.
-**Models Tested:** GPT-2 Medium (345M), Qwen2.5-1.5B-Instruct, Llama-3.2-3B-Instruct
+**Research Period:** December 2025 - Present
+**Models Tested:** GPT-2 Medium (355M), Qwen 1.5B-Instruct, Llama 3.2 3B-Instruct  
 **Code & Data:** Available in this repository
+
+---
 
 ---
 
