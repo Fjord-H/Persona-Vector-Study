@@ -6,7 +6,7 @@
 
 ## Abstract
 
-This research investigates whether transformer language models can perform self-monitoring for safety detection by analyzing their own internal activations—eliminating the need for external classifiers. Inspired by [Anthropic's work on persona vectors](https://www.deeplearning.ai/the-batch/identifying-persona-vectors-allows-ai-model-builders-to-edit-out-sycophancy-hallucinations-and-more/), we systematically explored how safety-related behaviors are encoded in model representations.
+This research investigates whether transformer language models can perform self-monitoring for safety detection by analyzing their own internal activations, eliminating the need for external classifiers. Inspired by [Anthropic's work on persona vectors](https://www.deeplearning.ai/the-batch/identifying-persona-vectors-allows-ai-model-builders-to-edit-out-sycophancy-hallucinations-and-more/), we systematically explored how safety-related behaviors are encoded in model representations.
 
 Through experimentation with GPT-2 Medium, Qwen 1.5B-Instruct, and Llama 3.2 3B-Instruct, we discovered a critical distinction: **persona-conditioned vectors capture conversational tone rather than content-level safety**. By shifting to content-based vector extraction with 200 training examples and rigorous evaluation on 1,800 test queries, we achieved 64-74% accuracy across all three models—demonstrating that self-monitoring is viable for safety applications.
 
@@ -21,6 +21,25 @@ Through experimentation with GPT-2 Medium, Qwen 1.5B-Instruct, and Llama 3.2 3B-
 **Code & Data:** Available in this repository
 
 ---
+
+## Live Interactive Dashboards
+
+**NOTE:** Dashboards may be offline during maintenance. For permanent access, deploy locally using Docker (see below).
+
+**When available:**
+- **Dashboard v1 (Complete Research):** http://3.106.128.216:8502
+- **Dashboard v0 (Discovery Process):** http://3.106.128.216:8501
+
+**Local deployment (always available):**
+```bash
+# Dashboard v1 (recommended)
+docker run -p 8502:8502 fjordhauler/persona-vectors-dashboard:v1
+
+# Dashboard v0 (discovery journey)
+docker run -p 8501:8501 fjordhauler/persona-vectors-dashboard:v0
+```
+
+See `Dashboard_readme.md` and `DOCKER.MD` for full deployment instructions.
 
 ---
 
@@ -142,7 +161,7 @@ safe_queries = [
     "Explain photosynthesis",
     "How do plants grow?",
     "What is gravity?",
-    # ... 25 total examples
+    # ... 100 total examples
 ]
 
 dangerous_queries = [
@@ -150,7 +169,7 @@ dangerous_queries = [
     "How to make a bomb?",
     "How to hack computers?",
     "How to steal a car?",
-    # ... 25 total examples
+    # ... 100 total examples
 ]
 
 # Extract activations from raw queries (no persona prompts!)
@@ -180,7 +199,7 @@ similarity = cosine_similarity(query_activation, tone_vector)
 
 **Content-Based Approach (Worked - 92.5%):**
 ```python
-# Multiple examples (25 each)
+# Multiple examples (100 each)
 safe_activations = [model(q) for q in safe_queries]
 dangerous_activations = [model(q) for q in dangerous_queries]
 
@@ -199,7 +218,7 @@ similarity = cosine_similarity(query_activation, content_vector)
 
 1. **Multiple examples vs. single prompt**
    - Tone: 1 helpful + 1 harmful prompt
-   - Content: 25 safe + 25 dangerous queries
+   - Content: Multiple actual examples (started with 50, scaled to 200)
    - Averaging creates more robust representations
 
 2. **Actual content vs. persona statements**
@@ -211,33 +230,22 @@ similarity = cosine_similarity(query_activation, content_vector)
    - Tone vectors: Linguistic style, conversational patterns
    - Content vectors: Conceptual danger, semantic meaning
 
-**The magic is in the averaging:** By taking the mean of 25 diverse examples, we create a vector that represents the *general pattern* of safe/dangerous content, not just individual quirks.
+**The magic is in the averaging:** By taking the mean of diverse examples, we create a vector that represents the *general pattern* of safe/dangerous content, not just individual quirks.
 
-This is why 50 examples (25 safe + 25 dangerous) are sufficient - we're capturing stable semantic patterns, not memorizing specific queries.
+**Initial discovery:** Even with 50 examples (25 per class), we saw dramatic improvement over tone vectors, proving the concept works.
 
+---
 
 ### Reality Check: The Overfitting Problem
 
 The initial 92.5% accuracy was exciting, but was it real?
 
 **Notebook 03 tested this rigorously:**
-- Trained on 50 examples (25 safe, 25 dangerous)
-- Small test: 50 examples → **92.5% accuracy** ✓
-- Large test: 2000 examples → **44-61% accuracy** ✗
+- Training: 50 examples (25 safe, 25 dangerous)
+- Small test set: 50 examples → **92.5% accuracy** ✓
+- Large test set: 2,000 examples → **44-61% accuracy** ✗
 
 **The harsh truth:** We were overfitting to a tiny test set.
-
-![Extended Evaluation Results](figures/extended_evaluation_comparison.png)
-*Figure 1: Small test set shows inflated performance. Large-scale evaluation reveals true accuracy.*
-
-**What the distributions reveal:**
-
-![Score Distributions](figures/extended_score_distributions.png)
-*Figure 2: Poor separation between safe (green) and dangerous (red) queries on realistic test set.*
-
-**Key insight:** With only 50 training examples, the model memorized specific patterns rather than learning general safety concepts. The 92.5% was an artifact of testing on queries too similar to training.
-
-**This failure was critical** - it forced us to scale up training data and use realistic test sets.
 
 ### Scaling Up: Training Data Impact
 
@@ -889,30 +897,53 @@ With 200 training examples and optimal layer selection:
 
 ## Docker Deployment
 
-**Interactive dashboard available via Docker!**
+**Two dashboard versions available:**
 
-### Quick Start
+### Dashboard v1 (Complete Research) - Recommended
 ```bash
-# Pull and run in one command
-docker run -p 8501:8501 fjordhauler/persona-vectors-dashboard
+# Pull and run
+docker run -d -p 8502:8502 --name dashboard-v1 fjordhauler/persona-vectors-dashboard:v1
 
-# Open browser: http://localhost:8501
+# Access at http://localhost:8502
+```
+
+Shows validated results across 3 models with comprehensive analysis.
+- 200 training + 1,800 test examples
+- Complete layer analysis
+- Failed experiments documented
+- 18+ interactive demo examples
+
+### Dashboard v0 (Discovery Process)
+```bash
+# Pull and run
+docker run -d -p 8501:8501 --name dashboard-v0 fjordhauler/persona-vectors-dashboard:v0
+
+# Access at http://localhost:8501
+```
+
+Shows original breakthrough and overfitting lessons.
+- Initial tone vs content discovery
+- Reality check: 92.5% → 44-61%
+- The research journey
+
+### Run Both Versions Simultaneously
+```bash
+# Run both dashboards
+docker run -d -p 8501:8501 --name dashboard-v0 fjordhauler/persona-vectors-dashboard:v0
+docker run -d -p 8502:8502 --name dashboard-v1 fjordhauler/persona-vectors-dashboard:v1
+
+# Stop both
+docker stop dashboard-v0 dashboard-v1
+
+# Remove both
+docker rm dashboard-v0 dashboard-v1
 ```
 
 ### Docker Hub Repository
-**Image:** https://hub.docker.com/r/fjordhauler/persona-vectors-dashboard
-
-### Manual Deployment
-```bash
-# Pull latest image
-docker pull fjordhauler/persona-vectors-dashboard:latest
-
-# Run container
-docker run -p 8501:8501 fjordhauler/persona-vectors-dashboard
-
-# Access dashboard
-# Open http://localhost:8501 in your browser
-```
+**Images:** https://hub.docker.com/r/fjordhauler/persona-vectors-dashboard
+- `fjordhauler/persona-vectors-dashboard:v0` - Discovery process
+- `fjordhauler/persona-vectors-dashboard:v1` - Complete research
+- `fjordhauler/persona-vectors-dashboard:latest` - Points to v1
 
 ### Build From Source
 ```bash
@@ -920,14 +951,17 @@ docker run -p 8501:8501 fjordhauler/persona-vectors-dashboard
 git clone https://github.com/yourusername/persona-vector-study
 cd persona-vector-study
 
-# Build image
-docker build -t persona-vectors-dashboard .
+# Build v1 (recommended)
+docker build -f Dockerfile.v1 -t persona-vectors-dashboard:v1 .
+
+# Build v0 (discovery journey)
+docker build -f Dockerfile.v0 -t persona-vectors-dashboard:v0 .
 
 # Run
-docker run -p 8501:8501 persona-vectors-dashboard
+docker run -p 8502:8502 persona-vectors-dashboard:v1
 ```
 
-**See `DOCKER.MD` for detailed deployment instructions.**
+**See `DOCKER.MD` for detailed deployment instructions, troubleshooting, and EC2 setup.**
 
 ---
 ## Future Research Directions
