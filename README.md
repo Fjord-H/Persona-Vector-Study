@@ -403,7 +403,7 @@ Not everything worked. **These negative results are just as valuable** - they va
 
 **This is different from both GPT-2 and Qwen!**
 
-![Cross-Model Comparison](figures/llama_final_summary.png)
+![Cross-Model Comparison](figures/3_models_summary.png)
 *Figure 6: Final results across all three models. Each architecture has unique optimal layer, but simple unweighted mean works across all.*
 
 ---
