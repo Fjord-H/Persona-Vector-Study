@@ -27,7 +27,7 @@ Through experimentation with GPT-2 Medium, Qwen 1.5B-Instruct, and Llama 3.2 3B-
 **NOTE:** Dashboards may be offline during maintenance. For permanent access, deploy locally using Docker (see below).
 
 **When available:**
-- **Dashboard v1 (Complete Research):** http://3.106.128.216:8502
+- **Dashboard v1 (Extended Research):** http://3.106.128.216:8502
 - **Dashboard v0 (Discovery Process):** http://3.106.128.216:8501
 
 **Local deployment (always available):**
@@ -403,7 +403,7 @@ Not everything worked. **These negative results are just as valuable** - they va
 
 **This is different from both GPT-2 and Qwen!**
 
-![Cross-Model Comparison](figures/3_models_summary.png)
+![Cross-Model Comparison](figures/llama_final_summary.png)
 *Figure 6: Final results across all three models. Each architecture has unique optimal layer, but simple unweighted mean works across all.*
 
 ---
@@ -899,7 +899,7 @@ With 200 training examples and optimal layer selection:
 
 **Two dashboard versions available:**
 
-### Dashboard v1 (Complete Research) - Recommended
+### Dashboard v1 (Extended Research) - Recommended
 ```bash
 # Pull and run
 docker run -d -p 8502:8502 --name dashboard-v1 fjordhauler/persona-vectors-dashboard:v1
@@ -942,7 +942,7 @@ docker rm dashboard-v0 dashboard-v1
 ### Docker Hub Repository
 **Images:** https://hub.docker.com/r/fjordhauler/persona-vectors-dashboard
 - `fjordhauler/persona-vectors-dashboard:v0` - Discovery process
-- `fjordhauler/persona-vectors-dashboard:v1` - Complete research
+- `fjordhauler/persona-vectors-dashboard:v1` - Extended research
 - `fjordhauler/persona-vectors-dashboard:latest` - Points to v1
 
 ### Build From Source
