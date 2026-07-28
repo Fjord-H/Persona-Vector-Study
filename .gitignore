@@ -35,3 +35,4 @@ desktop.ini
 *.pkl
 *.log
 test*.py
+paper-private/
