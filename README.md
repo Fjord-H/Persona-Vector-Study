@@ -866,7 +866,7 @@ Layer 3: External Validator
 
 ## Repository Structure
 ```
-persona-vector-study/
+Persona-Vector-Study/
 │
 ├── notebooks/                                 # Research notebooks (chronological)
 │   ├── 01_gpt2_vector_extraction.ipynb        # Initial tone vector exploration (GPT-2)
@@ -880,10 +880,14 @@ persona-vector-study/
 │
 ├── data/
 │   ├── vectors/                               # Extracted persona vectors (.pkl)
+│   │   ├── MANIFEST.md                        # Canonical vs pre-canonical vector provenance
 │   │   ├── train_test_split.pkl               # 200 train + 1800 test split
 │   │   ├── gpt2_vectors_200.pkl               # GPT-2 vectors (200 examples)
 │   │   ├── qwen_vectors_200.pkl               # Qwen vectors (200 examples)
 │   │   ├── llama_results.pkl                  # Llama evaluation results
+│   │   ├── all_layers_proper.pkl              # Per-example scores, every layer (audit evidence)
+│   │   ├── gpt2_vectors_weighted.pkl          # Weighting ablation evidence (S3-01)
+│   │   ├── qwen_vectors_weighted.pkl          # Weighting ablation evidence (S3-01)
 │   │   └── [other experimental results]
 │   │
 │   └── results/                               # Experimental outputs (.csv)
@@ -899,34 +903,46 @@ persona-vector-study/
 │   ├── extended_evaluation_comparison.png     # Overfitting reality check
 │   └── [other plots]
 │
-├── dashboard.py                            # Interactive Streamlit dashboard
-├── dashboard_requirements.txt                 # Dashboard dependencies
-├── requirements.txt                           # Core Python dependencies
-├── Dockerfile                                 # Container deployment
-├── DOCKER.MD                                  # Docker deployment guide
-├── README.md                                  # This file
-└── LICENSE                                    # MIT License
+├── dashboard/                                  # Streamlit dashboards (see dashboard/README.md)
+│   ├── dashboard_v0.py                        # Discovery-process dashboard (port 8501)
+│   ├── dashboard_v1.py                        # Complete-research dashboard (port 8502)
+│   ├── requirements.txt                       # Dashboard dependencies
+│   ├── Dockerfile.v0                          # Build for dashboard_v0.py
+│   ├── Dockerfile.v1                          # Build for dashboard_v1.py
+│   ├── Dockerfile.legacy_broken               # Dead: COPYs a Dashboard.py that no longer exists
+│   ├── DOCKER.md                              # Docker deployment guide
+│   └── README.md                              # Dashboard-specific docs, deprecation notice
+│
+├── analysis/                                   # Verification code behind defect_report.md
+│   ├── audit.py                               # Reproduces findings S1-06, S1-07, S2-04
+│   └── inspect_pkl.py                         # Reads torch-pickled .pkl files without torch
+│
+├── defect_report.md                            # Full audit findings and evidence
+├── README.md                                   # This file
+└── LICENSE                                     # MIT License
 ```
 
 **Quick navigation:**
 - Research journey: Notebooks 01 → 06
 - Key datasets: `data/vectors/train_test_split.pkl`
-- Interactive demo: `streamlit run dashboard.py`
-- Docker deploy: See `DOCKER.MD`
+- Audit evidence: `defect_report.md`, `analysis/audit.py`
+- Dashboards (deprecated): `dashboard/README.md`
+- Docker deploy: See `dashboard/DOCKER.md`
 
 ## Reproducibility
 
 ### Quick Start
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/persona-vector-study
-cd persona-vector-study
+git clone https://github.com/Fjord-H/Persona-Vector-Study
+cd Persona-Vector-Study
 
-# Install dependencies
-pip install -r requirements.txt
+# Install dashboard dependencies
+pip install -r dashboard/requirements.txt
 
-# Run interactive dashboard
-streamlit run dashboard.py
+# Run interactive dashboards (deprecated — see dashboard/README.md)
+streamlit run dashboard/dashboard_v0.py --server.port 8501
+streamlit run dashboard/dashboard_v1.py --server.port 8502
 
 # Or explore notebooks
 jupyter notebook notebooks/
@@ -1083,22 +1099,27 @@ docker rm dashboard-v0 dashboard-v1
 - `fjordhauler/persona-vectors-dashboard:latest` - Points to v1
 
 ### Build From Source
+
+Build from the **repo root**, not from inside `dashboard/` — the Dockerfiles `COPY`
+`data/` and `figures/` from outside that folder, so the build context must be the
+repository root.
+
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/persona-vector-study
-cd persona-vector-study
+git clone https://github.com/Fjord-H/Persona-Vector-Study
+cd Persona-Vector-Study
 
 # Build v1 (recommended)
-docker build -f Dockerfile.v1 -t persona-vectors-dashboard:v1 .
+docker build -f dashboard/Dockerfile.v1 -t persona-vectors-dashboard:v1 .
 
 # Build v0 (discovery journey)
-docker build -f Dockerfile.v0 -t persona-vectors-dashboard:v0 .
+docker build -f dashboard/Dockerfile.v0 -t persona-vectors-dashboard:v0 .
 
 # Run
 docker run -p 8502:8502 persona-vectors-dashboard:v1
 ```
 
-**See `DOCKER.MD` for detailed deployment instructions, troubleshooting, and EC2 setup.**
+**See `dashboard/DOCKER.md` for detailed deployment instructions, troubleshooting, and EC2 setup.**
 
 ---
 ## Future Research Directions
