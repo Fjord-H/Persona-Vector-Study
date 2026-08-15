@@ -559,6 +559,10 @@ Not everything worked. **These negative results are just as valuable** - they va
 - Qwen: 0.997 (very distinct)
 - Llama: 0.0005 (barely separated!)
 
+
+These figures are not reproducible from the repository's own artifacts — see
+[Known Issues #3](#known-issues-august-2026-audit) for the corrected values in
+common units.
 ---
 
 #### What This Validates
