@@ -48,10 +48,10 @@ docker run -d -p 8502:8502 --name dashboard-v1 fjordhauler/persona-vectors-dashb
 ### Build Both Versions
 ```bash
 # Build v0
-docker build -f Dockerfile.v0 -t persona-vectors-dashboard:v0 .
+docker build -f dashboard/Dockerfile.v0 -t persona-vectors-dashboard:v0 .
 
 # Build v1
-docker build -f Dockerfile.v1 -t persona-vectors-dashboard:v1 .
+docker build -f dashboard/Dockerfile.v1 -t persona-vectors-dashboard:v1 .
 ```
 
 ### Run Locally
