@@ -327,6 +327,9 @@ content_vector = mean(safe_activations) - mean(dangerous_activations)
 query_activation = model("How to make a bomb?")
 similarity = cosine_similarity(query_activation, content_vector)
 # Result: Strong discrimination (92.5% accuracy)
+# NOTE: this 92.5% figure is the training-data-contaminated result --
+# see Known Issues #1. It is shown here only as the original code, not
+# as a valid number.
 ```
 
 ### Why This Works Better
@@ -371,6 +374,12 @@ measurement the project produced.
 The distinction matters. Overfitting to a small test set is a sampling problem that
 more data fixes. Contamination is a protocol failure that more data does not fix —
 and it survived a confident comment in the code saying otherwise.
+
+> **The following two subsections (through "Why This Matters") are preserved as
+> originally written and have NOT been corrected inline.** All accuracy and
+> layer figures below come from the leaky test-set-optimized protocol -- see
+> [Known Issues](#known-issues-august-2026-audit) #2, #4, #7. Read as historical
+> record of what was originally claimed, not as current results.
 
 ### Scaling Up: Training Data Impact
 
@@ -438,6 +447,9 @@ and it survived a confident comment in the code saying otherwise.
 
 **Architectural insight:** RLHF training fundamentally reorganizes where safety decisions occur - from surface patterns to deep semantic processing.
 
+> *(End of preserved, uncorrected narrative. The ablations below ARE
+> verified accurate -- see "Verified clean" in Known Issues.)*
+
 ### What Didn't Work: Failed Experiments
 
 Not everything worked. **These negative results are just as valuable** - they validate that our simple baseline is hard to beat.
@@ -477,6 +489,11 @@ Not everything worked. **These negative results are just as valuable** - they va
 | GPT-2 | 66.0% (Layer 0) | 53.8% | **-12.2%** ❌ |
 | Qwen  | 74.4% (Layer 27) | 69.7% | **-4.8%** ❌ |
 
+*The "Single Best Layer" figures (66.0%, 74.4%) are the retracted absolute
+results -- see Known Issues #2, #4, #7. The finding this ablation actually
+supports is the RELATIVE one: ensembling underperformed the single best layer
+in this run, regardless of what that layer's true accuracy is.*
+
 **Why it failed:** Noise from weaker layers overwhelms signal from best layer.
 
 ---
@@ -508,6 +525,11 @@ Not everything worked. **These negative results are just as valuable** - they va
 - General detection > Category-specific
 
 **This is good news for deployment** - the simplest approach is also the most effective!
+
+> **From here through "What This Reveals About RLHF" (with the exception of the
+> already-corrected "Final Performance Summary" table), the narrative is preserved
+> as originally written and has NOT been corrected inline.** See
+> [Known Issues](#known-issues-august-2026-audit) #2, #3, #6, #7, #8.
 
 ### Cross-Model Validation
 
@@ -543,10 +565,14 @@ Not everything worked. **These negative results are just as valuable** - they va
 
 | Finding | Evidence |
 |---------|----------|
-| **Architecture matters more than size** | Llama (3.2B) < Qwen (1.5B) despite 2x parameters |
-| **Instruction-tuning helps** | Qwen (74.4%) and Llama (66.3%) > GPT-2 (64.2%) |
-| **Layer selection is model-specific** | GPT-2 Layer 0, Qwen Layer 27, Llama Layer 7 |
-| **Simple method is robust** | Unweighted mean works across all 3 architectures |
+| **Architecture matters more than size** *(unverified)* | Llama (3.2B) < Qwen (1.5B) despite 2x parameters |
+| **Instruction-tuning helps** *(unverified)* | Qwen (74.4%) and Llama (66.3%) > GPT-2 (64.2%) |
+| **Layer selection is model-specific** *(unverified)* | GPT-2 Layer 0, Qwen Layer 27, Llama Layer 7 |
+| **Simple method is robust** *(verified, see Known Issues)* | Unweighted mean works across all 3 architectures |
+
+*The first three rows above restate figures invalidated by the audit (see Known
+Issues, items #2, #3, #6, #7). Only the last row -- that a simple unweighted mean
+is not improved on by complex weighting -- is confirmed.*
 
 **Why different optimal layers?**
 
@@ -563,16 +589,20 @@ Not everything worked. **These negative results are just as valuable** - they va
 These figures are not reproducible from the repository's own artifacts — see
 [Known Issues #3](#known-issues-august-2026-audit) for the corrected values in
 common units.
+
 ---
 
-#### What This Validates
+#### What This Validates *(claims below retracted -- see Known Issues)*
 
-**Self-monitoring works across model families** (OpenAI, Alibaba, Meta)  
-**Simple unweighted mean is robust** (works on all 3 models)  
-**Training with 200 examples is sufficient** (consistent performance)  
-**Layer selection must be model-specific** (no universal "best layer")
+~~**Self-monitoring works across model families** (OpenAI, Alibaba, Meta)~~  
+**Simple unweighted mean is robust** (works on all 3 models) -- *confirmed*  
+~~**Training with 200 examples is sufficient** (consistent performance)~~  
+~~**Layer selection must be model-specific** (no universal "best layer")~~
 
-**The method generalizes, even though optimal layers differ.**
+~~**The method generalizes, even though optimal layers differ.**~~
+
+Only the weighting-robustness claim survives the audit. The rest assume the
+now-retracted per-model accuracy and layer figures above.
 
 ## Experimental Design
 
@@ -587,6 +617,9 @@ common units.
 - 900 dangerous
 
 **Key principle:** Test set is 9x larger than training to avoid overfitting observed in early experiments.
+
+*(Layer/accuracy figures in this subsection are retracted -- see
+[Known Issues](#known-issues-august-2026-audit) #2, #4, #7.)*
 
 ### Models & Layers Tested
 
@@ -623,6 +656,8 @@ def evaluate_self_monitoring(model, test_queries, test_labels, layer_idx):
         scores.append(safe_sim - danger_sim)
     
     # Find optimal threshold
+    # NOTE: this sweeps against test_labels -- this is the exact leak documented
+    # in Known Issues #4. Shown as the original code; do not copy as-is.
     best_acc = 0
     for threshold in linspace(min(scores), max(scores), 100):
         predictions = (scores < threshold).astype(int)
@@ -651,13 +686,21 @@ splits. The Qwen honest figure requires re-extraction (per-example scores for th
 reported layer were not saved). Separation is now shown in common units; see Known
 Issues #3.
 
-**Key findings:**
-- All models exceed random baseline (50%)
-- Instruction-tuned models perform better (66-74% vs 64%)
-- Architecture matters more than parameter count (Qwen 1.5B > Llama 3.2B)
-- Simple unweighted mean works across all models
+**Key findings, as originally stated (retracted, see above table and Known Issues):**
+- ~~All models exceed random baseline (50%)~~ -- true, but a bag-of-words baseline
+  beats all of them too (Known Issues #5)
+- ~~Instruction-tuned models perform better (66-74% vs 64%)~~ -- not established
+  (Known Issues #6)
+- ~~Architecture matters more than parameter count (Qwen 1.5B > Llama 3.2B)~~ --
+  confounded comparison (Known Issues #6)
+- Simple unweighted mean works across all models -- *this one holds*
 
 ---
+
+> **The three per-model write-ups below, through "What This Reveals About RLHF,"
+> are preserved as originally written and have NOT been corrected inline.** They
+> restate the retracted per-model figures and the unsupported RLHF claim. See
+> [Known Issues](#known-issues-august-2026-audit) #2, #6, #7, #8.
 
 ### GPT-2 Medium (Base Model)
 
@@ -739,6 +782,9 @@ Input [66%] → Middle Processing [Layer 7: 66.3%] → Final [62%]
 3. Instruction-tuned (Llama): Intermediate Layer 7
 
 **Implication:** There is no single "safety layer" - it depends on training methodology.
+
+> *(End of preserved, uncorrected narrative. See "What This Study Actually
+> Establishes" below for the defensible version of these claims.)*
 
 ---
 
@@ -842,7 +888,10 @@ Example: Can explain locks for security research, refuses for break-ins
 - Like knowing you COULD do harm but choosing not to
 
 **Production implications:**
-Self-monitoring could be Layer 1 in multi-stage guardrails:
+Self-monitoring could be Layer 1 in multi-stage guardrails. *(The specific
+layer assignments and the "64-74% accurate" figure below are the retracted
+per-model results -- the latency argument for this architecture stands
+independent of them, see Known Issues.)*
 ```
 User Input
     ↓
@@ -1021,15 +1070,17 @@ class SimpleSelfMonitor:
             "confidence": abs(score - self.threshold)
         }
 
-# Example usage with optimal settings for each model
-# GPT-2: Layer 0, threshold ≈ -0.018
+# Example usage -- illustrates the CLASS INTERFACE only.
+# The specific layer/threshold values below (Layer 0, Qwen Layer 27,
+# Llama Layer 7) are the retracted per-model results -- see Known Issues
+# #2, #4, #7. Do not treat these as validated production settings.
 monitor_gpt2 = SimpleSelfMonitor(
     model, tokenizer, safe_vec, danger_vec, 
     layer=0, threshold=-0.018
 )
 
-# Qwen: Layer 27, threshold ≈ -0.016  
-# Llama: Layer 7, threshold ≈ varies
+# Qwen: Layer 27, threshold ≈ -0.016 (retracted)
+# Llama: Layer 7, threshold ≈ varies (retracted)
 
 result = monitor_gpt2.check_query("How to make a bomb?")
 print(result)  
@@ -1038,15 +1089,16 @@ print(result)
 
 ### Expected Results
 
-With 200 training examples and optimal layer selection:
+> **This table is retracted** -- these are the same test-set-optimized figures
+> covered in [Known Issues](#known-issues-august-2026-audit) #2, #4, and #7.
+> Running the code above will not reproduce these numbers as a held-out result.
+> See `defect_report.md` for honest val/test figures where recomputed.
 
-| Model | Layer | Expected Accuracy | Separation |
-|-------|-------|------------------|------------|
-| GPT-2 Medium | 0 | ~64% | 0.997 |
-| Qwen 1.5B | 27 | ~74% | 0.997 |
-| Llama 3.2 3B | 7 | ~66% | 0.0005 |
-
-**Note:** Results may vary ±2% due to random train/test splits.
+~~| Model | Layer | Expected Accuracy | Separation |~~
+~~|-------|-------|------------------|------------|~~
+~~| GPT-2 Medium | 0 | ~64% | 0.997 |~~
+~~| Qwen 1.5B | 27 | ~74% | 0.997 |~~
+~~| Llama 3.2 3B | 7 | ~66% | 0.0005 |~~
 
 
 
@@ -1064,10 +1116,12 @@ docker run -d -p 8502:8502 --name dashboard-v1 fjordhauler/persona-vectors-dashb
 # Access at http://localhost:8502
 ```
 
-Shows validated results across 3 models with comprehensive analysis.
+Shows the pre-correction results across 3 models -- **retracted, see
+[Known Issues](#known-issues-august-2026-audit)** and the dashboard deprecation
+notice above. Kept running only as a historical/portfolio artifact.
 - 200 training + 1,800 test examples
 - Complete layer analysis
-- Failed experiments documented
+- Failed experiments documented (this part remains accurate)
 - 18+ interactive demo examples
 
 ### Dashboard v0 (Discovery Process)
@@ -1163,8 +1217,10 @@ docker run -p 8502:8502 persona-vectors-dashboard:v1
 - Few-shot learning for new threat categories?
 
 **Mechanistic Understanding:**
-- Why is Layer 0 optimal for base models?
-- What changes in RLHF that moves safety to Layer 27?
+- Is Layer 0 actually optimal for base models, once evaluated honestly? (open --
+  the original claim is retracted, see Known Issues #2, #4)
+- Does RLHF change where safety-relevant signal is computed, and if so how?
+  (open -- the original claim is retracted, see Known Issues #6, #7)
 - Can we predict optimal layer from architecture?
 
 ### Production Deployment Challenges
@@ -1236,6 +1292,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Last Updated:** February 8, 2026  
-**Status:** Core research complete | 3 models validated | Open for extension  
-**Next milestone:** Adversarial testing & production robustness evaluation
+**Last Updated:** August 2026 (correction pass)  
+**Status:** Under correction -- all three headline claims retracted, see
+[Known Issues](#known-issues-august-2026-audit) and `defect_report.md`  
+**Next milestone:** v2 pipeline with corrected protocol; methodology paper
+from the audit findings
