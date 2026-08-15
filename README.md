@@ -4,42 +4,159 @@
 
 ---
 
+> ## ⚠ Under Correction (August 2026)
+>
+> A systematic audit of this repository found methodological defects that invalidate
+> all three of its headline claims. The findings below are **not** reliable results.
+>
+> This repository remains public as a research record. Nothing has been deleted;
+> the original notebooks, artifacts, and text are preserved so the errors are
+> inspectable. See **[Known Issues](#known-issues-august-2026-audit)** for the full
+> list, and `defect_report.md` for evidence and reproduction steps.
+>
+> A corrected v2 study is in progress. Findings from the audit will be published as
+> a methodology paper.
+
 ## Abstract
 
-This research investigates whether transformer language models can perform self-monitoring for safety detection by analyzing their own internal activations, eliminating the need for external classifiers. Inspired by [Anthropic's work on persona vectors](https://www.deeplearning.ai/the-batch/identifying-persona-vectors-allows-ai-model-builders-to-edit-out-sycophancy-hallucinations-and-more/), we systematically explored how safety-related behaviors are encoded in model representations.
+This project investigated whether transformer language models can detect
+safety-relevant content by analyzing their own internal activations, using
+activation vectors extracted from hidden states.
 
-Through experimentation with GPT-2 Medium, Qwen 1.5B-Instruct, and Llama 3.2 3B-Instruct, we discovered a critical distinction: **persona-conditioned vectors capture conversational tone rather than content-level safety**. By shifting to content-based vector extraction with 200 training examples and rigorous evaluation on 1,800 test queries, we achieved 64-74% accuracy across all three models—demonstrating that self-monitoring is viable for safety applications.
+**Status: results retracted pending correction.** An August 2026 audit found that
+the accuracy figures, the cross-model separation comparison, and the claim about
+instruction tuning are each unsupported by the experiments that produced them.
+Specifically: layer and threshold were selected against the test set, an earlier
+92.5% figure was measured on training data, the separation metric was computed with
+two different formulas across notebooks and then compared directly, and no baseline
+was run. A TF-IDF bag-of-words classifier trained on the same 200 examples scores
+66.4% on the same test set, above every activation-based result in the study.
 
-**Key findings:**
-- Simple unweighted mean vectors outperform complex weighting schemes
-- Optimal layer varies by architecture: Layer 0 (GPT-2), Layer 27 (Qwen), Layer 7 (Llama)
-- RLHF training fundamentally reshapes where safety decisions occur within transformers
-- Multi-layer ensembles and per-category detection both hurt performance
+**What the project does still contain:** a clean 2,000-example dataset, correct and
+seeded split logic, a documented shift from persona-conditioned ("tone") vectors to
+content-based vectors, a weighting ablation showing that simple unweighted means are
+not improved on by confidence weighting, and per-example scores for every layer of
+every model tested. These are being reused in v2.
 
-**Research Period:** December 2025 - Present
-**Models Tested:** GPT-2 Medium (355M), Qwen 1.5B-Instruct, Llama 3.2 3B-Instruct  
-**Code & Data:** Available in this repository
+**Research period:** December 2025 – present
+**Models tested:** GPT-2 Medium (355M), Qwen2.5-1.5B-Instruct, Llama-3.2-3B-Instruct
+
+## Known Issues (August 2026 Audit)
+
+Full evidence and reproduction steps: `defect_report.md`.
+
+### Invalidating defects
+
+**1. The 92.5% result was measured on training data.**
+Notebook 02 labels its validation set `# Completely NEW queries for validation`.
+39 of 40 validation queries appear verbatim in the training list (19/20 safe,
+20/20 dangerous). The single exception is a near-duplicate. This README previously
+described the subsequent 92.5% → 44-61% drop as overfitting to a small test set.
+The actual mechanism was train/test contamination.
+
+**2. Both "optimal layers" were originally selected from two examples.**
+Notebooks 02 and 02a select the best layer by maximizing a separation statistic
+computed from one safe probe ("What is 2+2?") and one dangerous probe ("How to make
+poison?"). GPT-2 Layer 23 and Qwen Layer 1 were chosen this way, then hardcoded into
+notebook 04. The claim that instruction tuning "moves safety from Layer 23 to Layer 1"
+originates here and rests on two n=2 measurements.
+
+**3. The separation table compared incompatible quantities.**
+Notebook 04 stores raw `cosine_similarity`. Notebook 06 stores `1 - cosine_similarity`.
+Both fields are named `separation` and were placed in the same table. Converted to
+common units, the published artifacts give:
+
+| model | cosine(safe, danger) |
+|---|---|
+| GPT-2 | 0.99945 |
+| Qwen | 0.98975 |
+| Llama | 0.99951 |
+
+All three models are comparably entangled. **The "Llama is uniquely entangled"
+finding does not exist.** The figures previously reported here (0.997 / 0.997 /
+0.0005) are also not reproducible from the repository's own artifacts.
+
+**4. Threshold and layer were both selected on the test set.**
+`optimize_threshold` sweeps thresholds against test labels and returns the maximum;
+the reported layer is then chosen by maximum test accuracy. Refitting the threshold
+on a validation half and scoring the held-out half gives GPT-2 Layer 0 at
+**63.79% ± 1.30** (reported: 64.22%). The threshold component costs about 0.4 points
+at n=1800; the layer-selection component matters more.
+
+**5. No baseline was run, and a trivial one wins.**
+TF-IDF (1-2 grams) + logistic regression, trained on the same 200 training examples:
+
+| method | accuracy on the 1800-item test set |
+|---|---|
+| TF-IDF + LogReg | **66.39%** |
+| TF-IDF + LogReg (5-fold CV on the 1800) | **76.17% ± 2.07** |
+| GPT-2 Layer 0, honest val/test | 63.79% ± 1.30 |
+| Llama Layer 14, honest val/test | 64.74% ± 1.38 |
+
+No activation-based result in this study clears a bag-of-words baseline.
+
+**6. The RLHF claim is not licensed by the design.**
+The models are GPT-2 Medium (base) against Qwen2.5-1.5B-**Instruct** and
+Llama-3.2-3B-**Instruct**. These differ simultaneously in architecture, parameter
+count, tokenizer, pretraining corpus, and post-training recipe. A claim about what
+instruction tuning does requires a base/instruct pair from the same model family.
+
+**7. Layer coverage is asymmetric at the point of comparison.**
+GPT-2 was swept over all 24 layers. Qwen was swept over `range(1, 29)` — **layer 0
+was never tested**, and layer 0 is GPT-2's reported optimum. Llama was tested on 7 of
+28 layers. The cross-model layer comparison cannot be made from this data.
+
+**8. The reported Llama optimum is unstable.**
+Layer 7 under honest evaluation: 63.86% ± **6.45**, roughly five times the variance
+of every other layer. Layer 14 outperforms it at 64.74% ± 1.38.
+
+### Methodological issues carried into v2
+
+**9. Mean pooling introduces a dominant length channel.**
+Correlation between classifier score and raw query character length reaches
+**r = −0.911** at GPT-2 layer 6, where the label correlates at only −0.117. Length
+explains roughly 83% of score variance; the label explains about 1.4%. This did not
+inflate accuracy — the dataset is length-balanced (79.4 vs 79.3 mean characters;
+r(label, length) = −0.001, p = 0.96; a length-only classifier scores 49.9%) — but it
+dominates the signal. Masked pooling alone will not remove it.
+
+**10. Reference vectors and query vectors were pooled differently.**
+Class means were built with `padding=True` followed by an unmasked `.mean(dim=1)`,
+admitting pad/EOS embeddings. The test loop tokenizes one query at a time, unpadded.
+GPT-2 sets `pad_token = eos_token`, so the contaminant is the EOS embedding.
+
+**11. GPT-2 cosine similarity is dominated by outlier dimensions.**
+Dimension 268 alone accounts for 59.2% of the squared norm of the GPT-2 vectors; the
+top five dimensions account for 97.2%. Ablating them changes separation by roughly
+20×. Cosine on raw mean-pooled GPT-2 states measures activation scale more than
+content.
+
+**12. Dataset composition does not match the stated research question.**
+`dataset_2000.pkl` is 5% manually written capability requests ("How to make a bomb?")
+and 95% toxic-language material (RealToxicityPrompts and ToxiGen, 475 each per class).
+Toxic language and harmful-capability requests are different constructs. This study
+mostly measured the former while describing the latter, which also helps explain why
+TF-IDF performs so well.
+
+### Verified clean
+
+- `dataset_2000.pkl`: 1,000 unique strings per class, no duplicates, no strings
+  labelled both safe and dangerous.
+- Split logic in notebook 04: correct, seeded (`random.seed(42)`), reproducible.
+- The weighting ablation and its conclusion (unweighted mean is not improved on) hold.
+  Measured directly on the vectors, weighted and unweighted differ by cosine 0.99999554.
+- No credential is exposed in this repository.
 
 ---
 
-## Live Interactive Dashboards
+## Dashboards (Retired)
 
-**NOTE:** Dashboards may be offline during maintenance. For permanent access, deploy locally using Docker (see below).
+The live dashboards have been taken down because they display results invalidated by
+the August 2026 audit.
 
-**When available:**
-- **Dashboard v1 (Extended Research):** http://3.106.128.216:8502
-- **Dashboard v0 (Discovery Process):** http://3.106.128.216:8501
-
-**Local deployment (always available):**
-```bash
-# Dashboard v1 (recommended)
-docker run -p 8502:8502 fjordhauler/persona-vectors-dashboard:v1
-
-# Dashboard v0 (discovery journey)
-docker run -p 8501:8501 fjordhauler/persona-vectors-dashboard:v0
-```
-
-See `Dashboard_readme.md` and `DOCKER.MD` for full deployment instructions.
+The Docker images `fjordhauler/persona-vectors-dashboard:v0` and `:v1` remain on
+Docker Hub but are **deprecated** and show pre-correction figures. They should be
+treated as historical artifacts, not as current results.
 
 ---
 
@@ -236,16 +353,24 @@ similarity = cosine_similarity(query_activation, content_vector)
 
 ---
 
-### Reality Check: The Overfitting Problem
+### Reality Check: What Actually Happened
 
-The initial 92.5% accuracy was exciting, but was it real?
+The initial 92.5% accuracy was exciting. It was also measured on training data.
 
-**Notebook 03 tested this rigorously:**
-- Training: 50 examples (25 safe, 25 dangerous)
-- Small test set: 50 examples → **92.5% accuracy** ✓
-- Large test set: 2,000 examples → **44-61% accuracy** ✗
+Notebook 02's validation set is labelled `# Completely NEW queries for validation`.
+It is not: 39 of its 40 queries appear verbatim in the training list. The one
+exception, "What is photosynthesis?", is a near-duplicate of the training item
+"Explain photosynthesis".
 
-**The harsh truth:** We were overfitting to a tiny test set.
+Notebook 03 then evaluated on a genuinely held-out set of 2,000 examples and accuracy
+fell to 44-61%. This README previously described that drop as overfitting to a small
+test set. The correct description is that the 92.5% figure was training accuracy
+reported as validation accuracy, and the 44-61% figure was the first honest
+measurement the project produced.
+
+The distinction matters. Overfitting to a small test set is a sampling problem that
+more data fixes. Contamination is a protocol failure that more data does not fix —
+and it survived a confident comment in the code saying otherwise.
 
 ### Scaling Up: Training Data Impact
 
@@ -271,7 +396,6 @@ The initial 92.5% accuracy was exciting, but was it real?
 **Threshold optimization also helps:**
 - Default (threshold=0): 55-60% accuracy
 - Optimized threshold: 60-72% accuracy
-- Adding +5-12% through simple calibration
 
 ### Comprehensive Layer Analysis
 
@@ -282,7 +406,7 @@ The initial 92.5% accuracy was exciting, but was it real?
 **Breakthrough discoveries:**
 
 #### GPT-2 Medium (Base Model)
-- **Best layer: Layer 0 (input embeddings)** - 66.0% accuracy
+- **Best layer: Layer 0 (input embeddings)** - 66.0% accuracy (invalid — see Known Issues #4)
 - Performance drops sharply after Layer 1 (57.2%)
 - Middle layers plateau around 56-59%
 - Final layers recover slightly to ~60%
@@ -435,8 +559,6 @@ Not everything worked. **These negative results are just as valuable** - they va
 - Qwen: 0.997 (very distinct)
 - Llama: 0.0005 (barely separated!)
 
-Llama's representations are more "entangled" - safe and dangerous content closer in activation space, yet still detectable at 66.3%.
-
 ---
 
 #### What This Validates
@@ -467,7 +589,7 @@ Llama's representations are more "entangled" - safe and dangerous content closer
 **GPT-2 Medium (355M parameters):**
 - Architecture: Base model (no instruction tuning)
 - Tested: All 24 layers systematically
-- **Best layer: Layer 0 (input embeddings) - 66.0% accuracy**
+- **Best layer: Layer 0 (input embeddings) - 66.0% accuracy** (invalid — see Known Issues #4)
 
 **Qwen 1.5B-Instruct:**
 - Architecture: Instruction-tuned
@@ -506,19 +628,24 @@ def evaluate_self_monitoring(model, test_queries, test_labels, layer_idx):
     return best_acc
 ```
 
-**Key insight:** Threshold optimization adds ~5-10% accuracy over default threshold=0.
-
 ---
 
 ## Results & Analysis
 
 ### Final Performance Summary
 
-| Model | Parameters | Best Layer | Accuracy | Separation |
-|-------|-----------|-----------|----------|------------|
-| GPT-2 Medium | 355M | Layer 0 | **64.2%** | 0.997 |
-| Qwen 1.5B | 1.5B | Layer 27 | **74.4%** | 0.997 |
-| Llama 3.2 3B | 3.2B | Layer 7 | **66.3%** | 0.0005 |
+| Model | Parameters | Reported (invalid) | Honest val/test | Separation (cosine) |
+| --- | --- | --- | --- | --- |
+| GPT-2 Medium | 355M | ~~64.2% (L0)~~ | 63.79% ± 1.30 (L0) | 0.99945 |
+| Qwen 1.5B-Instruct | 1.5B | ~~74.4% (L27)~~ | not recomputed | 0.98975 |
+| Llama 3.2 3B-Instruct | 3.2B | ~~66.3% (L7)~~ | 64.74% ± 1.38 (L14) | 0.99951 |
+| **TF-IDF baseline** | — | — | **66.39%** | — |
+
+Reported figures used a threshold and layer selected on the test set. Honest figures
+refit the threshold on a validation half and score the held-out half over 200 random
+splits. The Qwen honest figure requires re-extraction (per-example scores for the
+reported layer were not saved). Separation is now shown in common units; see Known
+Issues #3.
 
 **Key findings:**
 - All models exceed random baseline (50%)
@@ -630,14 +757,23 @@ Input [66%] → Middle Processing [Layer 7: 66.3%] → Final [62%]
 - Cultural context differences
 - Evolving threat landscape
 
-### What This Study DOES Prove
-Despite limitations:
-- Self-monitoring is viable (64-74% accuracy)
-- Content vectors >> tone vectors (2x better)
-- Method generalizes across architectures
-- Simple approaches outperform complex ones
+### What This Study Actually Establishes
 
-**This is a proof-of-concept demonstrating feasibility, not a production system.**
+Following the audit, the defensible claims are narrower than those originally stated:
+
+- Persona-conditioned ("tone") vectors and content-based vectors behave differently.
+  This is a qualitative observation supported by the notebooks, not a quantified result.
+- Confidence weighting of training examples does not improve on a simple unweighted
+  mean. The weighting schemes are numerically near-identical to the unweighted case.
+- Multi-layer ensembling and per-category vectors did not improve on single-layer
+  general vectors in these runs.
+- Cosine-to-class-mean on mean-pooled hidden states is a weak estimator. On this task
+  it does not reach a bag-of-words baseline.
+
+The following are **not** established by this study and were previously claimed here:
+self-monitoring viability, model-specific optimal layers, cross-model separation
+differences, and any effect of instruction tuning on where safety-relevant signal is
+computed.
 
 ## Visualizations
 
@@ -735,9 +871,9 @@ persona-vector-study/
 ├── notebooks/                                 # Research notebooks (chronological)
 │   ├── 01_gpt2_vector_extraction.ipynb        # Initial tone vector exploration (GPT-2)
 │   ├── 01a_qwen_vector_extraction.ipynb       # Tone vectors on instruction-tuned (Qwen)
-│   ├── 02_self_monitoring_experiment.ipynb    # Testing tone vectors for detection (overfitted)
+│   ├── 02_self_monitoring_experiment.ipynb    # Content vectors; validation set contaminated (see Known Issues #1)
 │   ├── 02a_qwen_content_vectors.ipynb         # Breakthrough: Content-based approach
-│   ├── 03-extended-evaluation.ipynb           # Reality check: Overfitting exposed
+│   ├── 03-extended-evaluation.ipynb           # First honest evaluation (2000 examples)
 │   ├── 04-improved-vector-training.ipynb      # Scaling to 200 examples
 │   ├── 05-weighted-vectors-with-multi-layer-ensemble.ipynb  # Failed experiments + layer analysis
 │   └── 06-llama-3-2-3b-evaluation.ipynb       # Cross-model validation (Llama)
@@ -822,9 +958,10 @@ danger_activations = [get_activation(q, layer=0) for q in dangerous_queries]
 safe_vec = torch.stack(safe_activations).mean(dim=0)
 danger_vec = torch.stack(danger_activations).mean(dim=0)
 
-# Separation metric
-separation = 1 - torch.cosine_similarity(safe_vec, danger_vec, dim=0).item()
-print(f"Separation: {separation:.6f}")  # Should be ~0.997 for GPT-2
+# NOTE: vectors have shape [1, d]. dim=0 reduces over the length-1 axis and is a bug.
+# Use dim=1. Report cosine directly and name it accordingly.
+cosine = torch.cosine_similarity(safe_vec, danger_vec, dim=1).item()
+print(f"cosine(safe, danger): {cosine:.6f}")  # ~0.99945 for GPT-2 at layer 23
 ```
 
 ### Self-Monitoring Implementation
