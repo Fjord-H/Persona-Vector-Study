@@ -22,11 +22,12 @@ DATA_DIR = REPO_ROOT / "data"
 # /kaggle/working without touching code — see notebooks/01_extract_activations.ipynb.
 CACHE_DIR = Path(os.environ.get("PV2_CACHE_DIR", PIPELINE_ROOT / "cache"))
 MANIFEST_DIR = Path(os.environ.get("PV2_MANIFEST_DIR", PIPELINE_ROOT / "manifests"))
-# Pipeline-generated (not hand-sourced) artifacts live under Pipeline_v2/, not data/ —
-# data/ is reserved for the hand-curated/sourced CSVs and their manifests per this
-# project's existing convention; splits.csv is derived output, not source data.
-SPLITS_DIR = Path(os.environ.get("PV2_SPLITS_DIR", PIPELINE_ROOT / "splits"))
-FROZEN_SPLITS_PATH = SPLITS_DIR / "splits_frozen.csv"
+# The frozen split lives in data/, not Pipeline_v2/, at Fjord's explicit request: it's
+# a versioned dataset artifact (seed, source-file hashes, split assignments) meant to
+# sit alongside the CSVs it splits, not a pipeline-internal cache file. JSON, not CSV,
+# so the seed/ratios/hashes/split-sizes can be recorded inside the same file as the
+# assignments rather than needing a separate sidecar.
+SPLITS_JSON_PATH = Path(os.environ.get("PV2_SPLITS_JSON", DATA_DIR / "splits.json"))
 
 HARMBENCH_CSV = DATA_DIR / "harmbench_filtered_250.csv"
 NEUTRAL_CSV = DATA_DIR / "neutral_set_300.csv"

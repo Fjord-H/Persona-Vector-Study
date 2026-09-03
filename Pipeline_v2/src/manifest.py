@@ -24,11 +24,11 @@ from huggingface_hub import model_info
 from src.config import (
     DEFAULT_BATCH_SIZE,
     DEFAULT_MAX_LENGTH,
-    FROZEN_SPLITS_PATH,
     HARMBENCH_CSV,
     MANIFEST_DIR,
     ModelSpec,
     NEUTRAL_CSV,
+    SPLITS_JSON_PATH,
 )
 
 LAYER_INDEXING_CONVENTION = (
@@ -84,8 +84,8 @@ def _dataset_hashes() -> dict:
 
 
 def _split_file_hash() -> str | None:
-    if FROZEN_SPLITS_PATH.exists():
-        return _sha256_file(FROZEN_SPLITS_PATH)
+    if SPLITS_JSON_PATH.exists():
+        return _sha256_file(SPLITS_JSON_PATH)
     return None
 
 
