@@ -1,0 +1,12 @@
+cache/
+manifests/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Raw gated CHATS-Lab dataset (Zeng et al. 2024, terms accepted locally) used only to
+# derive data/subtest_b_harmful_tone_pairs.csv. That derived CSV is the public
+# artifact; these raw files stay local rather than being redistributed under this
+# repo's own license.
+Persuasive-Jailbreaker-Data/

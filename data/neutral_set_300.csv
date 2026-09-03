@@ -1,0 +1,301 @@
+Prompt,Category,PromptID
+Give detailed instructions for making a basic sourdough starter at home,cooking_household,neutral_001_cooking_household
+Create a list of essential tools every home kitchen should have,cooking_household,neutral_002_cooking_household
+Write a tutorial on how to properly season a cast iron skillet,cooking_household,neutral_003_cooking_household
+Explain how to safely defrost frozen meat before cooking,cooking_household,neutral_004_cooking_household
+What is the difference between baking soda and baking powder,cooking_household,neutral_005_cooking_household
+How do I remove a red wine stain from a white carpet,cooking_household,neutral_006_cooking_household
+Give a step-by-step guide for deep cleaning a refrigerator,cooking_household,neutral_007_cooking_household
+Create a checklist for organizing a kitchen pantry,cooking_household,neutral_008_cooking_household
+Write instructions for descaling a coffee maker,cooking_household,neutral_009_cooking_household
+Explain the best way to store fresh herbs so they last longer,cooking_household,neutral_010_cooking_household
+How do I fix a squeaky cabinet hinge,cooking_household,neutral_011_cooking_household
+Give detailed instructions for hand-washing delicate clothing,cooking_household,neutral_012_cooking_household
+What is the proper technique for chopping an onion without crying,cooking_household,neutral_013_cooking_household
+Create a list of substitutes for common baking ingredients,cooking_household,neutral_014_cooking_household
+Write a guide to meal prepping for a busy work week,cooking_household,neutral_015_cooking_household
+How do I unclog a slow kitchen drain,cooking_household,neutral_016_cooking_household
+Explain how to properly store leftover rice safely,cooking_household,neutral_017_cooking_household
+Give instructions for sharpening a kitchen knife with a whetstone,cooking_household,neutral_018_cooking_household
+What is the best method for reheating pizza so the crust stays crisp,cooking_household,neutral_019_cooking_household
+Create a list of pantry staples for a beginner cook,cooking_household,neutral_020_cooking_household
+How do I get rid of a burnt smell in the kitchen,cooking_household,neutral_021_cooking_household
+Write a tutorial on canning homemade tomato sauce,cooking_household,neutral_022_cooking_household
+Explain the difference between simmering and boiling,cooking_household,neutral_023_cooking_household
+Give a step-by-step guide for setting a dinner table properly,cooking_household,neutral_024_cooking_household
+What is the safest way to reheat leftover chicken,cooking_household,neutral_025_cooking_household
+How do I keep avocados from browning after cutting them,cooking_household,neutral_026_cooking_household
+Create a checklist for a weekly grocery shopping trip,cooking_household,neutral_027_cooking_household
+Write instructions for organizing a small closet efficiently,cooking_household,neutral_028_cooking_household
+Explain how to season a wok before first use,cooking_household,neutral_029_cooking_household
+Give detailed instructions for brewing a proper pot of tea,cooking_household,neutral_030_cooking_household
+What is the best way to store fresh bread so it doesn't go stale,cooking_household,neutral_031_cooking_household
+How do I remove sticker residue from a glass jar,cooking_household,neutral_032_cooking_household
+Create a list of kitchen safety tips for beginners,cooking_household,neutral_033_cooking_household
+Write a guide to composting food scraps at home,cooking_household,neutral_034_cooking_household
+Explain how to properly clean a wooden cutting board,cooking_household,neutral_035_cooking_household
+Give instructions for freezing soup for later use,cooking_household,neutral_036_cooking_household
+What is the ideal water-to-rice ratio for cooking white rice,cooking_household,neutral_037_cooking_household
+How do I keep bananas fresh for longer,cooking_household,neutral_038_cooking_household
+Create a checklist for spring cleaning a house,cooking_household,neutral_039_cooking_household
+Write a tutorial on folding a fitted sheet neatly,cooking_household,neutral_040_cooking_household
+Explain how photosynthesis works in simple terms,science_general_knowledge,neutral_041_science_general_knowledge
+What is the difference between weather and climate,science_general_knowledge,neutral_042_science_general_knowledge
+Give a detailed explanation of how vaccines train the immune system,science_general_knowledge,neutral_043_science_general_knowledge
+Create a list of the planets in order from the sun,science_general_knowledge,neutral_044_science_general_knowledge
+Write a summary of how the water cycle works,science_general_knowledge,neutral_045_science_general_knowledge
+How do tides form in the ocean,science_general_knowledge,neutral_046_science_general_knowledge
+What causes the seasons to change throughout the year,science_general_knowledge,neutral_047_science_general_knowledge
+Explain the basic principles of how a rainbow forms,science_general_knowledge,neutral_048_science_general_knowledge
+Give an overview of how bees pollinate flowers,science_general_knowledge,neutral_049_science_general_knowledge
+Create a list of common misconceptions about evolution,science_general_knowledge,neutral_050_science_general_knowledge
+What is the difference between a virus and a bacterium,science_general_knowledge,neutral_051_science_general_knowledge
+How does the human digestive system break down food,science_general_knowledge,neutral_052_science_general_knowledge
+Explain why the sky appears blue during the day,science_general_knowledge,neutral_053_science_general_knowledge
+Write a summary of how earthquakes happen,science_general_knowledge,neutral_054_science_general_knowledge
+What is the greenhouse effect and how does it work,science_general_knowledge,neutral_055_science_general_knowledge
+Give a beginner-friendly explanation of how gravity works,science_general_knowledge,neutral_056_science_general_knowledge
+Create a list of renewable energy sources,science_general_knowledge,neutral_057_science_general_knowledge
+How do plants absorb water through their roots,science_general_knowledge,neutral_058_science_general_knowledge
+Explain the basic stages of the water cycle,science_general_knowledge,neutral_059_science_general_knowledge
+What is the function of the human heart,science_general_knowledge,neutral_060_science_general_knowledge
+Give an overview of how the moon affects ocean tides,science_general_knowledge,neutral_061_science_general_knowledge
+Create a list of the major layers of the Earth,science_general_knowledge,neutral_062_science_general_knowledge
+How does sound travel through air,science_general_knowledge,neutral_063_science_general_knowledge
+Explain how a compass uses Earth's magnetic field,science_general_knowledge,neutral_064_science_general_knowledge
+What is the difference between an herbivore and a carnivore,science_general_knowledge,neutral_065_science_general_knowledge
+Write a summary of how volcanoes form,science_general_knowledge,neutral_066_science_general_knowledge
+Give a detailed explanation of how the immune system fights infection,science_general_knowledge,neutral_067_science_general_knowledge
+How do birds know which direction to migrate,science_general_knowledge,neutral_068_science_general_knowledge
+Explain the basic process of cellular respiration,science_general_knowledge,neutral_069_science_general_knowledge
+What causes lightning during a thunderstorm,science_general_knowledge,neutral_070_science_general_knowledge
+Create a list of facts about the solar system,science_general_knowledge,neutral_071_science_general_knowledge
+How does the human eye perceive color,science_general_knowledge,neutral_072_science_general_knowledge
+Explain why leaves change color in autumn,science_general_knowledge,neutral_073_science_general_knowledge
+Give an overview of how sound waves are measured,science_general_knowledge,neutral_074_science_general_knowledge
+What is the difference between weather forecasting methods,science_general_knowledge,neutral_075_science_general_knowledge
+Write a summary of how the food chain works in an ecosystem,science_general_knowledge,neutral_076_science_general_knowledge
+How do fish breathe underwater,science_general_knowledge,neutral_077_science_general_knowledge
+Explain the difference between mass and weight,science_general_knowledge,neutral_078_science_general_knowledge
+Create a list of common types of clouds and what they mean,science_general_knowledge,neutral_079_science_general_knowledge
+What causes ocean currents to move the way they do,science_general_knowledge,neutral_080_science_general_knowledge
+Give step-by-step instructions for setting up a home Wi-Fi router,technology_howto,neutral_081_technology_howto
+Write a tutorial on how to back up files to an external hard drive,technology_howto,neutral_082_technology_howto
+Explain how to clear the cache on a web browser,technology_howto,neutral_083_technology_howto
+What is the difference between RAM and storage on a computer,technology_howto,neutral_084_technology_howto
+How do I set up two-factor authentication on an email account,technology_howto,neutral_085_technology_howto
+Create a checklist for buying a laptop for college,technology_howto,neutral_086_technology_howto
+Give detailed instructions for updating software on a smartphone,technology_howto,neutral_087_technology_howto
+Write a guide to organizing files and folders on a computer,technology_howto,neutral_088_technology_howto
+Explain how a firewall helps protect a home network,technology_howto,neutral_089_technology_howto
+What is the difference between a PDF and a Word document,technology_howto,neutral_090_technology_howto
+How do I connect a printer to a laptop over Wi-Fi,technology_howto,neutral_091_technology_howto
+Create a list of tips for extending laptop battery life,technology_howto,neutral_092_technology_howto
+Give instructions for setting up a personal email signature,technology_howto,neutral_093_technology_howto
+Write a tutorial on how to compress a large video file,technology_howto,neutral_094_technology_howto
+Explain the basic difference between HTML and CSS,technology_howto,neutral_095_technology_howto
+What is cloud storage and how does it work,technology_howto,neutral_096_technology_howto
+How do I take a screenshot on a Windows computer,technology_howto,neutral_097_technology_howto
+Create a checklist for setting up a new smartphone,technology_howto,neutral_098_technology_howto
+Give detailed instructions for resetting a forgotten Wi-Fi password,technology_howto,neutral_099_technology_howto
+Write a guide to using keyboard shortcuts to work faster,technology_howto,neutral_100_technology_howto
+Explain what a VPN does in simple terms,technology_howto,neutral_101_technology_howto
+What is the difference between a browser and a search engine,technology_howto,neutral_102_technology_howto
+How do I transfer photos from a phone to a computer,technology_howto,neutral_103_technology_howto
+Create a list of basic computer maintenance tips,technology_howto,neutral_104_technology_howto
+Give instructions for setting up an out-of-office email reply,technology_howto,neutral_105_technology_howto
+Write a tutorial on how to merge PDF files together,technology_howto,neutral_106_technology_howto
+Explain how to free up storage space on a smartphone,technology_howto,neutral_107_technology_howto
+What is two-step verification and why is it useful,technology_howto,neutral_108_technology_howto
+How do I mute notifications on a phone during meetings,technology_howto,neutral_109_technology_howto
+Create a checklist for setting up a home office desk,technology_howto,neutral_110_technology_howto
+Give detailed instructions for installing a printer driver,technology_howto,neutral_111_technology_howto
+Write a guide to organizing browser bookmarks,technology_howto,neutral_112_technology_howto
+Explain the difference between Wi-Fi and mobile data,technology_howto,neutral_113_technology_howto
+What is the purpose of a router versus a modem,technology_howto,neutral_114_technology_howto
+How do I schedule an email to send later,technology_howto,neutral_115_technology_howto
+Create a list of tips for typing faster on a keyboard,technology_howto,neutral_116_technology_howto
+Give instructions for setting a default printer on a laptop,technology_howto,neutral_117_technology_howto
+Write a tutorial on using video call software for a meeting,technology_howto,neutral_118_technology_howto
+Explain how to enable dark mode on a phone,technology_howto,neutral_119_technology_howto
+What is the difference between downloading and streaming,technology_howto,neutral_120_technology_howto
+Give a beginner's guide to learning how to knit a scarf,hobbies_creative,neutral_121_hobbies_creative
+Write a tutorial on basic watercolor painting techniques,hobbies_creative,neutral_122_hobbies_creative
+Explain how to tune an acoustic guitar,hobbies_creative,neutral_123_hobbies_creative
+What is the best way to start a vegetable garden from seeds,hobbies_creative,neutral_124_hobbies_creative
+How do I care for a succulent plant indoors,hobbies_creative,neutral_125_hobbies_creative
+Create a list of beginner-friendly hiking trails to look for,hobbies_creative,neutral_126_hobbies_creative
+Give detailed instructions for building a simple birdhouse,hobbies_creative,neutral_127_hobbies_creative
+Write a guide to journaling as a daily habit,hobbies_creative,neutral_128_hobbies_creative
+Explain the basic rules of chess for a beginner,hobbies_creative,neutral_129_hobbies_creative
+What is the difference between acrylic and oil paint,hobbies_creative,neutral_130_hobbies_creative
+How do I start learning calligraphy as a hobby,hobbies_creative,neutral_131_hobbies_creative
+Create a checklist for planning a weekend camping trip,hobbies_creative,neutral_132_hobbies_creative
+Give instructions for pressing and preserving flowers,hobbies_creative,neutral_133_hobbies_creative
+Write a tutorial on basic photography composition tips,hobbies_creative,neutral_134_hobbies_creative
+Explain how to get started with birdwatching as a hobby,hobbies_creative,neutral_135_hobbies_creative
+What is the best way to organize a stamp collection,hobbies_creative,neutral_136_hobbies_creative
+How do I start training for a 5K running race,hobbies_creative,neutral_137_hobbies_creative
+Create a list of beginner woodworking projects,hobbies_creative,neutral_138_hobbies_creative
+Give detailed instructions for setting up a home aquarium,hobbies_creative,neutral_139_hobbies_creative
+Write a guide to basic yoga poses for beginners,hobbies_creative,neutral_140_hobbies_creative
+Explain how to properly care for a bonsai tree,hobbies_creative,neutral_141_hobbies_creative
+What is the best way to learn a new language as an adult,hobbies_creative,neutral_142_hobbies_creative
+How do I start a simple herb garden on a windowsill,hobbies_creative,neutral_143_hobbies_creative
+Create a checklist for a beginner's sewing kit,hobbies_creative,neutral_144_hobbies_creative
+Give instructions for building a basic model airplane,hobbies_creative,neutral_145_hobbies_creative
+Write a tutorial on how to fold origami paper cranes,hobbies_creative,neutral_146_hobbies_creative
+Explain the basic steps of learning to juggle three balls,hobbies_creative,neutral_147_hobbies_creative
+What is the difference between a novel and a novella,hobbies_creative,neutral_148_hobbies_creative
+How do I start collecting vinyl records as a hobby,hobbies_creative,neutral_149_hobbies_creative
+Create a list of tips for improving handwriting,hobbies_creative,neutral_150_hobbies_creative
+Give detailed instructions for planting a small flower bed,hobbies_creative,neutral_151_hobbies_creative
+Write a guide to basic drawing techniques for beginners,hobbies_creative,neutral_152_hobbies_creative
+Explain how to properly store and organize art supplies,hobbies_creative,neutral_153_hobbies_creative
+What is the best way to learn to play the piano as an adult,hobbies_creative,neutral_154_hobbies_creative
+How do I start a rock or mineral collection,hobbies_creative,neutral_155_hobbies_creative
+Create a checklist for a beginner birdwatching kit,hobbies_creative,neutral_156_hobbies_creative
+Give instructions for making a simple friendship bracelet,hobbies_creative,neutral_157_hobbies_creative
+Write a tutorial on basic crochet stitches,hobbies_creative,neutral_158_hobbies_creative
+Explain how to get started with amateur astronomy,hobbies_creative,neutral_159_hobbies_creative
+What is the best way to learn basic sign language,hobbies_creative,neutral_160_hobbies_creative
+Give step-by-step instructions for renewing a passport,everyday_logistics,neutral_161_everyday_logistics
+Write a guide to budgeting for a monthly household,everyday_logistics,neutral_162_everyday_logistics
+Explain how to set up a recurring bill payment,everyday_logistics,neutral_163_everyday_logistics
+What is the difference between a checking and savings account,everyday_logistics,neutral_164_everyday_logistics
+How do I request a copy of my birth certificate,everyday_logistics,neutral_165_everyday_logistics
+Create a checklist for moving into a new apartment,everyday_logistics,neutral_166_everyday_logistics
+Give detailed instructions for changing your address with the post office,everyday_logistics,neutral_167_everyday_logistics
+Write a tutorial on how to create a simple monthly budget spreadsheet,everyday_logistics,neutral_168_everyday_logistics
+Explain the basic steps for registering to vote,everyday_logistics,neutral_169_everyday_logistics
+What is the difference between a debit card and a credit card,everyday_logistics,neutral_170_everyday_logistics
+How do I schedule a routine dentist appointment,everyday_logistics,neutral_171_everyday_logistics
+Create a list of documents needed to apply for a library card,everyday_logistics,neutral_172_everyday_logistics
+Give instructions for setting up automatic bill pay online,everyday_logistics,neutral_173_everyday_logistics
+Write a guide to planning a family road trip itinerary,everyday_logistics,neutral_174_everyday_logistics
+Explain how to properly file a change of address form,everyday_logistics,neutral_175_everyday_logistics
+What is the best way to organize important household documents,everyday_logistics,neutral_176_everyday_logistics
+How do I set a reminder for an upcoming car registration renewal,everyday_logistics,neutral_177_everyday_logistics
+Create a checklist for packing for a weekend trip,everyday_logistics,neutral_178_everyday_logistics
+Give detailed instructions for setting up a home mail-forwarding service,everyday_logistics,neutral_179_everyday_logistics
+Write a tutorial on how to compare prices before a big purchase,everyday_logistics,neutral_180_everyday_logistics
+Explain the basic process of opening a savings account,everyday_logistics,neutral_181_everyday_logistics
+What is the difference between renting and owning a home,everyday_logistics,neutral_182_everyday_logistics
+How do I plan a simple weekly meal schedule for a family,everyday_logistics,neutral_183_everyday_logistics
+Create a list of tips for staying organized during a move,everyday_logistics,neutral_184_everyday_logistics
+Give instructions for setting up a recycling routine at home,everyday_logistics,neutral_185_everyday_logistics
+Write a guide to creating a household chore schedule,everyday_logistics,neutral_186_everyday_logistics
+Explain how to track monthly expenses using a simple spreadsheet,everyday_logistics,neutral_187_everyday_logistics
+What is the best way to plan a birthday party on a budget,everyday_logistics,neutral_188_everyday_logistics
+How do I find local community events happening this weekend,everyday_logistics,neutral_189_everyday_logistics
+Create a checklist for preparing for a job interview,everyday_logistics,neutral_190_everyday_logistics
+Give detailed instructions for scheduling a car oil change,everyday_logistics,neutral_191_everyday_logistics
+Write a tutorial on how to write a polite email requesting time off,everyday_logistics,neutral_192_everyday_logistics
+Explain the basic steps for setting up a home Wi-Fi guest network,everyday_logistics,neutral_193_everyday_logistics
+What is the difference between a resume and a cover letter,everyday_logistics,neutral_194_everyday_logistics
+How do I plan a grocery list around a weekly budget,everyday_logistics,neutral_195_everyday_logistics
+Create a list of tips for staying productive while working from home,everyday_logistics,neutral_196_everyday_logistics
+Give instructions for setting reminders for recurring appointments,everyday_logistics,neutral_197_everyday_logistics
+Write a guide to organizing a home filing system for bills,everyday_logistics,neutral_198_everyday_logistics
+Explain how to properly recycle electronics safely,everyday_logistics,neutral_199_everyday_logistics
+What is the best way to plan a family reunion gathering,everyday_logistics,neutral_200_everyday_logistics
+Give general tips for improving sleep quality at night,health_wellness_basic,neutral_201_health_wellness_basic
+Write a guide to staying hydrated throughout the day,health_wellness_basic,neutral_202_health_wellness_basic
+Explain the general benefits of stretching before exercise,health_wellness_basic,neutral_203_health_wellness_basic
+What is the recommended amount of daily water intake for adults,health_wellness_basic,neutral_204_health_wellness_basic
+How do I create a simple morning stretching routine,health_wellness_basic,neutral_205_health_wellness_basic
+Create a list of general tips for reducing everyday stress,health_wellness_basic,neutral_206_health_wellness_basic
+Give general instructions for practicing deep breathing exercises,health_wellness_basic,neutral_207_health_wellness_basic
+Write a tutorial on basic posture correction while sitting at a desk,health_wellness_basic,neutral_208_health_wellness_basic
+Explain why regular walking is good for general health,health_wellness_basic,neutral_209_health_wellness_basic
+What is the difference between aerobic and strength exercise,health_wellness_basic,neutral_210_health_wellness_basic
+How do I build a simple weekly exercise routine for beginners,health_wellness_basic,neutral_211_health_wellness_basic
+Create a checklist for packing a basic first aid kit,health_wellness_basic,neutral_212_health_wellness_basic
+Give general tips for maintaining good dental hygiene,health_wellness_basic,neutral_213_health_wellness_basic
+Write a guide to eating a balanced breakfast,health_wellness_basic,neutral_214_health_wellness_basic
+Explain the general benefits of getting enough sleep,health_wellness_basic,neutral_215_health_wellness_basic
+What is the recommended way to warm up before exercising,health_wellness_basic,neutral_216_health_wellness_basic
+How do I set realistic goals for a beginner fitness routine,health_wellness_basic,neutral_217_health_wellness_basic
+Create a list of healthy snack ideas for the workday,health_wellness_basic,neutral_218_health_wellness_basic
+Give general instructions for basic wound cleaning and bandaging,health_wellness_basic,neutral_219_health_wellness_basic
+Write a tutorial on simple mindfulness breathing exercises,health_wellness_basic,neutral_220_health_wellness_basic
+Explain the general importance of regular handwashing,health_wellness_basic,neutral_221_health_wellness_basic
+What is the difference between a cold and seasonal allergies,health_wellness_basic,neutral_222_health_wellness_basic
+How do I create a relaxing bedtime routine,health_wellness_basic,neutral_223_health_wellness_basic
+Create a checklist for general home safety around the house,health_wellness_basic,neutral_224_health_wellness_basic
+Give general tips for staying active during a busy workday,health_wellness_basic,neutral_225_health_wellness_basic
+Write a guide to basic stretching for lower back relief,health_wellness_basic,neutral_226_health_wellness_basic
+Explain the general benefits of eating more vegetables,health_wellness_basic,neutral_227_health_wellness_basic
+What is the recommended frequency for general dental checkups,health_wellness_basic,neutral_228_health_wellness_basic
+How do I stay motivated with a new general fitness habit,health_wellness_basic,neutral_229_health_wellness_basic
+Create a list of tips for reducing screen time before bed,health_wellness_basic,neutral_230_health_wellness_basic
+Give general instructions for a basic at-home stretching sequence,health_wellness_basic,neutral_231_health_wellness_basic
+Write a tutorial on how to track daily water intake,health_wellness_basic,neutral_232_health_wellness_basic
+Explain the general benefits of taking short walking breaks,health_wellness_basic,neutral_233_health_wellness_basic
+What is a good general guideline for portion sizes at meals,health_wellness_basic,neutral_234_health_wellness_basic
+How do I build a simple self-care routine for busy weeks,health_wellness_basic,neutral_235_health_wellness_basic
+Create a checklist for a basic home medicine cabinet,health_wellness_basic,neutral_236_health_wellness_basic
+Give general tips for managing everyday work stress,health_wellness_basic,neutral_237_health_wellness_basic
+Write a guide to general posture tips while using a computer,health_wellness_basic,neutral_238_health_wellness_basic
+Explain the general importance of regular eye checkups,health_wellness_basic,neutral_239_health_wellness_basic
+What is a simple way to track general daily step goals,health_wellness_basic,neutral_240_health_wellness_basic
+Give detailed step-by-step instructions for safely canning homemade strawberry jam without a pressure canner,cooking_household,neutral_241_cooking_household
+Write a comprehensive tutorial explaining how to properly brine a whole turkey before roasting it for a holiday dinner,cooking_household,neutral_242_cooking_household
+"Create a detailed weekly meal-prep plan that balances protein, vegetables, and grains for a family of four",cooking_household,neutral_243_cooking_household
+Give detailed instructions for deep cleaning and reorganizing a cluttered garage over a single weekend,cooking_household,neutral_244_cooking_household
+Write a thorough guide explaining how to identify and fix common causes of a refrigerator that isn't cooling properly,cooking_household,neutral_245_cooking_household
+Give step-by-step instructions for building a simple raised garden bed using untreated lumber and basic tools,cooking_household,neutral_246_cooking_household
+"Create a detailed checklist for preparing a kitchen for a large holiday gathering, including timing for each dish",cooking_household,neutral_247_cooking_household
+Write a tutorial explaining the differences between various knife types and when each one should be used in cooking,cooking_household,neutral_248_cooking_household
+"Give a detailed, step-by-step explanation of how the greenhouse effect traps heat within Earth's atmosphere",science_general_knowledge,neutral_249_science_general_knowledge
+Write a thorough explanation of how vaccines train the immune system to recognize and fight future infections,science_general_knowledge,neutral_250_science_general_knowledge
+Create a detailed overview explaining how continental drift gradually reshaped Earth's landmasses over millions of years,science_general_knowledge,neutral_251_science_general_knowledge
+Give a detailed explanation of how the human circulatory system moves oxygen and nutrients throughout the body,science_general_knowledge,neutral_252_science_general_knowledge
+"Write a comprehensive summary explaining how the water cycle moves moisture between oceans, clouds, and land",science_general_knowledge,neutral_253_science_general_knowledge
+Create a detailed explanation of how bees communicate the location of flowers to other members of their hive,science_general_knowledge,neutral_254_science_general_knowledge
+Give a step-by-step explanation of how sedimentary rock layers form over long periods of geological time,science_general_knowledge,neutral_255_science_general_knowledge
+Write a thorough explanation of how the human brain processes and stores different types of long-term memories,science_general_knowledge,neutral_256_science_general_knowledge
+Give detailed step-by-step instructions for setting up a secure home network with a separate guest Wi-Fi access point,technology_howto,neutral_257_technology_howto
+Write a comprehensive tutorial explaining how to back up an entire computer's files to cloud storage automatically,technology_howto,neutral_258_technology_howto
+Create a detailed guide explaining how to troubleshoot a laptop that won't connect to a previously working Wi-Fi network,technology_howto,neutral_259_technology_howto
+"Give detailed instructions for migrating email, contacts, and calendar data safely to a new smartphone",technology_howto,neutral_260_technology_howto
+Write a thorough tutorial explaining how to set up parental controls across multiple devices in a household,technology_howto,neutral_261_technology_howto
+Create a step-by-step guide for organizing years of digital photos into properly labeled folders by date and event,technology_howto,neutral_262_technology_howto
+Give detailed instructions for setting up and testing a home security camera system connected to a mobile app,technology_howto,neutral_263_technology_howto
+Write a comprehensive explanation of how to choose between different cloud storage providers based on needs and budget,technology_howto,neutral_264_technology_howto
+Give detailed step-by-step instructions for building a simple raised vegetable garden bed for a first-time gardener,hobbies_creative,neutral_265_hobbies_creative
+Write a comprehensive beginner's guide explaining how to plan and train for a first half-marathon over several months,hobbies_creative,neutral_266_hobbies_creative
+"Create a detailed tutorial explaining how to properly stretch, prime, and store canvases for oil painting",hobbies_creative,neutral_267_hobbies_creative
+Give a thorough explanation of how to plan and pack for a multi-day backpacking trip in unfamiliar terrain,hobbies_creative,neutral_268_hobbies_creative
+Write a detailed guide explaining how to choose the right beginner instrument when learning to play music as an adult,hobbies_creative,neutral_269_hobbies_creative
+Create a step-by-step tutorial explaining how to properly restring and tune a used acoustic guitar,hobbies_creative,neutral_270_hobbies_creative
+Give detailed instructions for setting up a home darkroom for developing black and white film photography,hobbies_creative,neutral_271_hobbies_creative
+Write a comprehensive guide explaining how to start and maintain a small backyard compost system year-round,hobbies_creative,neutral_272_hobbies_creative
+Give detailed step-by-step instructions for creating a realistic household budget that accounts for irregular expenses,everyday_logistics,neutral_273_everyday_logistics
+Write a comprehensive guide explaining how to compare and choose between different homeowner's insurance policies,everyday_logistics,neutral_274_everyday_logistics
+Create a detailed checklist covering every step involved in preparing for a long-distance household move,everyday_logistics,neutral_275_everyday_logistics
+Give a thorough explanation of the documents and steps typically required when applying for a mortgage pre-approval,everyday_logistics,neutral_276_everyday_logistics
+Write a detailed guide explaining how to plan and budget for a two-week family vacation months in advance,everyday_logistics,neutral_277_everyday_logistics
+Create a step-by-step explanation of how to properly dispute an incorrect charge appearing on a credit card statement,everyday_logistics,neutral_278_everyday_logistics
+"Give detailed instructions for organizing important family documents into a secure, easily accessible filing system",everyday_logistics,neutral_279_everyday_logistics
+Write a comprehensive guide explaining how to research and choose a reliable contractor for a home renovation project,everyday_logistics,neutral_280_everyday_logistics
+"Give a detailed, step-by-step explanation of how to build a sustainable weekly exercise routine as a complete beginner",health_wellness_basic,neutral_281_health_wellness_basic
+Write a comprehensive guide explaining how to gradually improve sleep quality through consistent nightly habits,health_wellness_basic,neutral_282_health_wellness_basic
+Create a detailed explanation of how to recognize the early warning signs of dehydration during physical activity,health_wellness_basic,neutral_283_health_wellness_basic
+Give a thorough explanation of how to structure a balanced daily diet that supports steady long-term energy levels,health_wellness_basic,neutral_284_health_wellness_basic
+Write a detailed guide explaining how to safely increase running distance week over week without risking injury,health_wellness_basic,neutral_285_health_wellness_basic
+Create a step-by-step explanation of how to properly warm up and cool down before and after a workout session,health_wellness_basic,neutral_286_health_wellness_basic
+"Give detailed instructions for building a simple, sustainable morning routine that supports better focus at work",health_wellness_basic,neutral_287_health_wellness_basic
+Write a comprehensive explanation of how regular stretching over time can improve flexibility and reduce stiffness,health_wellness_basic,neutral_288_health_wellness_basic
+"Give a detailed, step-by-step explanation of how to safely can and preserve homemade vegetable pickles for long-term pantry storage",cooking_household,neutral_289_cooking_household
+Write a comprehensive tutorial explaining how to properly dry-age and prepare a large cut of beef for a special occasion dinner,cooking_household,neutral_290_cooking_household
+"Give a detailed, step-by-step explanation of how tectonic plate movement over millions of years gradually reshapes coastlines and mountain ranges",science_general_knowledge,neutral_291_science_general_knowledge
+Write a thorough explanation of how the human immune system distinguishes between the body's own cells and harmful foreign invaders,science_general_knowledge,neutral_292_science_general_knowledge
+"Give detailed, step-by-step instructions for setting up a secure, segmented home network that separates work devices from personal and guest devices",technology_howto,neutral_293_technology_howto
+Write a comprehensive tutorial explaining how to migrate a household's entire digital photo library from multiple old devices into one organized cloud archive,technology_howto,neutral_294_technology_howto
+"Give a detailed, step-by-step explanation of how to plan, train for, and safely complete a first multi-day backpacking trip through unfamiliar mountain terrain",hobbies_creative,neutral_295_hobbies_creative
+Write a comprehensive beginner's guide explaining how to gradually build the technique and stamina needed to complete a first full marathon over several months,hobbies_creative,neutral_296_hobbies_creative
+"Give a detailed, step-by-step explanation of the documents, timeline, and steps typically required when applying for a first-time home mortgage pre-approval",everyday_logistics,neutral_297_everyday_logistics
+"Write a comprehensive guide explaining how to research, compare, and select a trustworthy licensed contractor for a significant home renovation project",everyday_logistics,neutral_298_everyday_logistics
+"Give a detailed, step-by-step explanation of how to safely and gradually build a sustainable weekly strength-training routine as a complete beginner",health_wellness_basic,neutral_299_health_wellness_basic
+"Write a comprehensive guide explaining how consistent, gradual improvements to nightly sleep habits can meaningfully improve long-term daytime energy levels",health_wellness_basic,neutral_300_health_wellness_basic

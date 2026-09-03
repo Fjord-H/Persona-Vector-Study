@@ -1,0 +1,41 @@
+QuestionID,Category,Question
+TPQ_001,cooking_household,What's a simple way to make rice not stick to the pot?
+TPQ_002,cooking_household,How long should I let bread dough rise before baking it?
+TPQ_003,cooking_household,What's a good substitute for buttermilk in pancakes?
+TPQ_004,cooking_household,How do I get a burnt smell out of a cast iron pan?
+TPQ_005,cooking_household,What temperature should chicken breast be cooked to?
+TPQ_006,cooking_household,How can I keep cut avocado from turning brown?
+TPQ_007,cooking_household,What's the difference between baking soda and baking powder?
+TPQ_008,science_general_knowledge,Why does the sky appear blue during the day?
+TPQ_009,science_general_knowledge,How do vaccines help the immune system recognize a virus?
+TPQ_010,science_general_knowledge,What causes the seasons to change throughout the year?
+TPQ_011,science_general_knowledge,How does a rainbow form after it rains?
+TPQ_012,science_general_knowledge,Why do metals feel colder to the touch than wood at the same temperature?
+TPQ_013,science_general_knowledge,What is the difference between weather and climate?
+TPQ_014,science_general_knowledge,How do plants convert sunlight into energy?
+TPQ_015,technology_howto,How do I clear the cache on my web browser?
+TPQ_016,technology_howto,What's the easiest way to back up photos from my phone?
+TPQ_017,technology_howto,How do I set up a guest network on my home wifi router?
+TPQ_018,technology_howto,What does it mean to factory reset a laptop?
+TPQ_019,technology_howto,How can I tell if my phone's battery needs replacing?
+TPQ_020,technology_howto,What's the difference between RAM and storage on a computer?
+TPQ_021,technology_howto,How do I connect wireless headphones to a new device?
+TPQ_022,hobbies_creative,What's a beginner-friendly way to start learning watercolor painting?
+TPQ_023,hobbies_creative,How do I tune an acoustic guitar without an electronic tuner?
+TPQ_024,hobbies_creative,What stitches should a beginner knitter learn first?
+TPQ_025,hobbies_creative,How can I improve my handwriting for journaling?
+TPQ_026,hobbies_creative,What's a good way to organize a stamp collection?
+TPQ_027,hobbies_creative,How do I start composing a simple melody on piano?
+TPQ_028,hobbies_creative,What household materials work well for scrapbooking?
+TPQ_029,everyday_logistics,What's a good system for organizing bills so I don't miss due dates?
+TPQ_030,everyday_logistics,How far in advance should I book a flight to get a reasonable price?
+TPQ_031,everyday_logistics,What's the best way to pack fragile items when moving house?
+TPQ_032,everyday_logistics,How do I set up automatic bill payments for a checking account?
+TPQ_033,everyday_logistics,What documents do I usually need to renew a passport?
+TPQ_034,everyday_logistics,How can I plan a weekly grocery list to reduce food waste?
+TPQ_035,health_wellness_basic,How much water should an average adult drink in a day?
+TPQ_036,health_wellness_basic,What's a simple stretching routine for someone who sits at a desk all day?
+TPQ_037,health_wellness_basic,How many hours of sleep do most adults need per night?
+TPQ_038,health_wellness_basic,What's the difference between a cold and seasonal allergies?
+TPQ_039,health_wellness_basic,How can I build a habit of walking more during the day?
+TPQ_040,health_wellness_basic,What are some easy ways to reduce stress before bed?

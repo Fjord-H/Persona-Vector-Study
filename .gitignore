@@ -34,5 +34,5 @@ desktop.ini
 # Project specific
 *.pkl
 *.log
-test*.py
+/test*.py
 paper-private/
