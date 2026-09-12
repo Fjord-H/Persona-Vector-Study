@@ -12,13 +12,15 @@ from src import run_extraction  # noqa: E402
 EXPECTED_SUBTEST_A_COUNT = 550  # 250 harmbench + 300 neutral
 EXPECTED_SUBTEST_B_NEUTRAL_COUNT = 48  # 24 pairs x (calm, hostile)
 EXPECTED_SUBTEST_B_HARMFUL_COUNT = 18  # 9 sourced pairs x (calm, hostile)
+EXPECTED_SUBTEST_B_V3_COUNT = 5200  # 7 mutations x 500 + 1700 Type 2 items
 
 
 def test_raw_items_have_expected_count_and_no_duplicates():
     item_ids, texts = run_extraction.build_subtest_ab_items(tokenizer=None, formatting_variant="raw")
 
     expected_total = (
-        EXPECTED_SUBTEST_A_COUNT + EXPECTED_SUBTEST_B_NEUTRAL_COUNT + EXPECTED_SUBTEST_B_HARMFUL_COUNT
+        EXPECTED_SUBTEST_A_COUNT + EXPECTED_SUBTEST_B_NEUTRAL_COUNT
+        + EXPECTED_SUBTEST_B_HARMFUL_COUNT + EXPECTED_SUBTEST_B_V3_COUNT
     )
     assert len(item_ids) == len(texts) == expected_total
     assert len(set(item_ids)) == len(item_ids), "duplicate item_id in the combined extraction list"
