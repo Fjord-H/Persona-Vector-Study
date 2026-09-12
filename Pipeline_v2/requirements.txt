@@ -4,7 +4,7 @@
 # provides (verify with `torch.cuda.is_available()`) rather than reinstalling it.
 transformers==5.12.1
 huggingface_hub==1.20.1
-numpy==2.4.3
+numpy>=1.26,<2.1
 pandas==2.2.3
-scikit-learn==1.9.0
+scikit-learn==1.6.1
 pytest==9.1.1
