@@ -4,6 +4,18 @@
 
 ---
 
+> ## v2 Study — Completed September 2026
+>
+> A fully corrected v2 pipeline was built and run to completion. Summary of findings:
+>
+> **What was built:** Extraction pipeline for 5 models (GPT-2 Medium, Qwen2.5-1.5B base/instruct, Llama-3.2-3B base/instruct), all layers, two pooling variants (masked-mean and last-token), two formatting variants (raw and chat-templated). Three methods compared: tone-pole (Method 1), content-pole (Method 2), neutral-origin (Method 3). Frozen train/val/test splits (seed 42, 70/15/15, stratified), bootstrap CIs on all reported numbers, TF-IDF baseline, random-direction null controls, and a length-correlation flag per result. Full spec: `v2_pipeline_SPEC.md`.
+>
+> **What was found:** On sub-test A (content-varying, tone-fixed), activation methods reach 93–99% accuracy — but so does TF-IDF (93.4% single-fit, 96.6% ± 2.4% CV). The separation is largely lexical: HarmBench prompts and hand-written neutral prompts are distributionally distinct as text, so bag-of-words classification is nearly saturated. Activation-space geometry does not add meaningful signal over surface form on this task.
+>
+> **The suggestive result:** On sub-test B neutral arm (N=24, tone-varying, content-fixed), `content_pole` on `qwen2.5-1.5b-instruct` chat formatting achieves 95.8% [89.6–100] vs. TF-IDF's 85.4% on the same pairs. The gap is in the right direction but not statistically distinguishable at N=24. A larger sub-test B (N≥150) would be needed to confirm whether activation representations are genuinely more tone-invariant than surface form. The neutral-origin distance method (Method 3) fails to generalize to sub-test B for almost every model, collapsing to 0%.
+>
+> **Conclusion:** The v2 pipeline is methodologically sound and the infrastructure is reusable. The primary claim — that activation-space methods outperform surface-form baselines for harmful content detection — is not supported by this data. The study is parked here as a research artifact. See `Pipeline_v2/` for the full pipeline code, `data/subtest_b_MANIFEST.md` for sub-test B limitations, and `method_comparison_results.csv` (Kaggle output) for all reported numbers.
+
 > ## ⚠ Under Correction (August 2026)
 >
 > A systematic audit of this repository found methodological defects that invalidate
