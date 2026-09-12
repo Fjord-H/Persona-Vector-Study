@@ -19,6 +19,7 @@ from src.config import (
     POOLING_VARIANTS,
     SUBTEST_B_HARMFUL_CSV,
     SUBTEST_B_NEUTRAL_CSV,
+    SUBTEST_B_V3_JSONL,
     ModelSpec,
 )
 from src.extraction import DEFAULT_MAX_NEW_TOKENS
@@ -38,6 +39,27 @@ def _subtest_b_neutral_items() -> list[tuple[str, str]]:
     return items
 
 
+def _subtest_b_v3_items() -> list[tuple[str, str]]:
+    """Loads all 5200 items from subtest_b_v3.jsonl. Item IDs use the same
+    f"{source}:{source_id}:{mutation}" formula as build_subtest_b_v3.py and
+    eval/subtest_b_v3.py, so the cache keys are automatically consistent.
+
+    The texts are already-mutated (cipher-encoded, slang-substituted, etc.) —
+    formatting (raw/chat) is applied on top of these by build_subtest_ab_items,
+    same as all other items. Note: cipher and ascii mutations produce texts that
+    are much longer than the typical 128-token DEFAULT_MAX_LENGTH ceiling; they
+    will be truncated like any other long prompt.
+    """
+    import json
+    items = []
+    with open(SUBTEST_B_V3_JSONL, encoding="utf-8") as f:
+        for line in f:
+            obj = json.loads(line)
+            item_id = f"{obj['source']}:{obj['source_id']}:{obj['mutation']}"
+            items.append((item_id, obj["text"]))
+    return items
+
+
 def _subtest_b_harmful_items() -> list[tuple[str, str]]:
     """All 9 sourced rows are extracted (cheap, and keeps the cache complete/inspectable)
     even though only the 3 verified-clean rows (config.SUBTEST_B_HARMFUL_CLEAN_ROW_INDICES)
@@ -53,10 +75,10 @@ def _subtest_b_harmful_items() -> list[tuple[str, str]]:
 
 def build_subtest_ab_items(tokenizer, formatting_variant: str) -> tuple[list[str], list[str]]:
     """Returns (item_ids, formatted_texts) for sub-test A (550 harmbench + neutral
-    prompts) plus both sub-test B arms (48 + 18 = 66 items), formatted per
-    `formatting_variant`. All of this content shares one namespace (same model_key,
-    formatting_variant) in the cache since eval/subtest_a.py and eval/subtest_b.py both
-    read from it via activation_store.load_layer_matrix keyed by item_id.
+    prompts) plus both sub-test B arms (48 + 18 = 66 items) plus all 5200 sub-test B v3
+    items, formatted per `formatting_variant`. All content shares one namespace (same
+    model_key, formatting_variant) in the cache — eval modules read from it via
+    activation_store.load_layer_matrix keyed by item_id.
     """
     if formatting_variant == "raw":
         format_fn = format_raw
@@ -68,6 +90,7 @@ def build_subtest_ab_items(tokenizer, formatting_variant: str) -> tuple[list[str
     raw_items: list[tuple[str, str]] = [(row.prompt_id, row.text) for row in load_combined_rows()]
     raw_items += _subtest_b_neutral_items()
     raw_items += _subtest_b_harmful_items()
+    raw_items += _subtest_b_v3_items()
 
     ids = [item_id for item_id, _ in raw_items]
     if len(ids) != len(set(ids)):
