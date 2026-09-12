@@ -35,6 +35,7 @@ TONE_POLE_SYSTEM_PROMPTS_CSV = DATA_DIR / "tone_pole_system_prompts.csv"
 TONE_POLE_QUESTIONS_CSV = DATA_DIR / "tone_pole_questions_40.csv"
 SUBTEST_B_NEUTRAL_CSV = DATA_DIR / "subtest_b_neutral_tone_pairs.csv"
 SUBTEST_B_HARMFUL_CSV = DATA_DIR / "subtest_b_harmful_tone_pairs.csv"
+SUBTEST_B_V3_JSONL = DATA_DIR / "subtest_b_v3" / "subtest_b_v3.jsonl"
 # Rows in subtest_b_harmful_tone_pairs.csv verified clean by manual inspection
 # (see data/subtest_b_MANIFEST.md) — 1-indexed row numbers as listed in the manifest's
 # pair-by-pair verdict table. N=3; not independently reportable with a bootstrap CI,
