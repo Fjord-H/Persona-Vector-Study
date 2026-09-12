@@ -1,0 +1,300 @@
+{
+  "seed": 42,
+  "total_items": 5200,
+  "type1_construction": {
+    "harmful_base_n": 250,
+    "neutral_base_n_downsampled": 250,
+    "near_duplicate_removed": {
+      "harmbench": 0,
+      "neutral_set": 0
+    },
+    "exact_duplicate_removed": {
+      "harmbench": 0,
+      "neutral_set": 0
+    }
+  },
+  "type2_construction": {
+    "xstest": {
+      "safe_n_original": 250,
+      "unsafe_n_original": 200,
+      "safe_n_downsampled_to": 200,
+      "near_duplicate_removed": 6,
+      "exact_duplicate_removed": 0
+    },
+    "or_bench": {
+      "hard_1k_n_actual": 656,
+      "toxic_n_actual": 655,
+      "hard_n_downsampled_to": 655,
+      "near_duplicate_removed": 1,
+      "exact_duplicate_removed": 0
+    }
+  },
+  "counts_by_source_label": {
+    "harmbench": {
+      "benign": 0,
+      "harmful": 1750
+    },
+    "neutral_set": {
+      "benign": 1750,
+      "harmful": 0
+    },
+    "or_bench": {
+      "benign": 654,
+      "harmful": 654
+    },
+    "xstest": {
+      "benign": 196,
+      "harmful": 196
+    }
+  },
+  "counts_by_mutation_label": {
+    "ascii": {
+      "benign": 250,
+      "harmful": 250
+    },
+    "atbash": {
+      "benign": 250,
+      "harmful": 250
+    },
+    "caesar": {
+      "benign": 250,
+      "harmful": 250
+    },
+    "misspellings": {
+      "benign": 250,
+      "harmful": 250
+    },
+    "morse": {
+      "benign": 250,
+      "harmful": 250
+    },
+    "none": {
+      "benign": 850,
+      "harmful": 850
+    },
+    "role_play": {
+      "benign": 250,
+      "harmful": 250
+    },
+    "slang": {
+      "benign": 250,
+      "harmful": 250
+    }
+  },
+  "length_report": {
+    "overall_r_length_label": 0.1531885303322839,
+    "per_class": {
+      "benign": {
+        "mean": 122.41653846153847,
+        "std": 92.291485579358
+      },
+      "harmful": {
+        "mean": 157.21807692307692,
+        "std": 129.19763837468042
+      }
+    },
+    "per_source": {
+      "harmbench": {
+        "mean": 195.83371428571428,
+        "std": 140.62928613298038,
+        "n": 1750,
+        "r_length_label": null
+      },
+      "neutral_set": {
+        "mean": 140.73771428571428,
+        "std": 105.94685283934638,
+        "n": 1750,
+        "r_length_label": null
+      },
+      "or_bench": {
+        "mean": 92.2125382262997,
+        "std": 24.25475153400565,
+        "n": 1308,
+        "r_length_label": -0.18484483431197152
+      },
+      "xstest": {
+        "mean": 44.47959183673469,
+        "std": 14.700230241137026,
+        "n": 392,
+        "r_length_label": -0.012510565681300339
+      }
+    },
+    "length_only_classifier_by_source": {
+      "or_bench": {
+        "mean_cv_accuracy": 0.5764762656839519,
+        "flagged": true
+      },
+      "xstest": {
+        "mean_cv_accuracy": 0.4438169425511198,
+        "flagged": false
+      }
+    }
+  },
+  "tfidf_sanity_check": {
+    "overall": {
+      "mean_accuracy": 0.6909615384615384,
+      "ci_low": 0.6830673076923077,
+      "ci_high": 0.6990384615384615,
+      "fold_accuracies": [
+        0.676923076923077,
+        0.698076923076923,
+        0.6903846153846154,
+        0.7028846153846153,
+        0.6865384615384615
+      ],
+      "n": 5200
+    },
+    "by_source": {
+      "harmbench": {
+        "skipped": "single class or too few items",
+        "n": 1750
+      },
+      "neutral_set": {
+        "skipped": "single class or too few items",
+        "n": 1750
+      },
+      "or_bench": {
+        "mean_accuracy": 0.7882542189465063,
+        "ci_low": 0.7679389312977098,
+        "ci_high": 0.8056681582872685,
+        "fold_accuracies": [
+          0.7557251908396947,
+          0.7709923664122137,
+          0.8015267175572519,
+          0.8122605363984674,
+          0.8007662835249042
+        ],
+        "n": 1308,
+        "flagged_above_80": false
+      },
+      "xstest": {
+        "mean_accuracy": 0.665660499837715,
+        "ci_low": 0.6128205128205128,
+        "ci_high": 0.7099642973060695,
+        "fold_accuracies": [
+          0.7215189873417721,
+          0.6708860759493671,
+          0.717948717948718,
+          0.5641025641025641,
+          0.6538461538461539
+        ],
+        "n": 392,
+        "flagged_above_80": false
+      }
+    },
+    "by_mutation": {
+      "ascii": {
+        "mean_accuracy": 0.608,
+        "ci_low": 0.5700000000000001,
+        "ci_high": 0.6439999999999999,
+        "fold_accuracies": [
+          0.65,
+          0.62,
+          0.54,
+          0.58,
+          0.65
+        ],
+        "n": 500,
+        "flagged_above_80": false
+      },
+      "atbash": {
+        "mean_accuracy": 0.6639999999999999,
+        "ci_low": 0.63,
+        "ci_high": 0.6940000000000001,
+        "fold_accuracies": [
+          0.61,
+          0.63,
+          0.71,
+          0.68,
+          0.69
+        ],
+        "n": 500,
+        "flagged_above_80": false
+      },
+      "caesar": {
+        "mean_accuracy": 0.6559999999999999,
+        "ci_low": 0.6,
+        "ci_high": 0.71,
+        "fold_accuracies": [
+          0.69,
+          0.71,
+          0.56,
+          0.72,
+          0.6
+        ],
+        "n": 500,
+        "flagged_above_80": false
+      },
+      "misspellings": {
+        "mean_accuracy": 0.75,
+        "ci_low": 0.734,
+        "ci_high": 0.768,
+        "fold_accuracies": [
+          0.76,
+          0.72,
+          0.78,
+          0.74,
+          0.75
+        ],
+        "n": 500,
+        "flagged_above_80": false
+      },
+      "morse": {
+        "mean_accuracy": 0.5640000000000001,
+        "ci_low": 0.5360000000000001,
+        "ci_high": 0.6020000000000001,
+        "fold_accuracies": [
+          0.56,
+          0.53,
+          0.56,
+          0.53,
+          0.64
+        ],
+        "n": 500,
+        "flagged_above_80": false
+      },
+      "none": {
+        "mean_accuracy": 0.758235294117647,
+        "ci_low": 0.7364705882352942,
+        "ci_high": 0.7776470588235294,
+        "fold_accuracies": [
+          0.7441176470588236,
+          0.7176470588235294,
+          0.7852941176470588,
+          0.7735294117647059,
+          0.7705882352941177
+        ],
+        "n": 1700,
+        "flagged_above_80": false
+      },
+      "role_play": {
+        "mean_accuracy": 0.5199999999999999,
+        "ci_low": 0.508,
+        "ci_high": 0.532,
+        "fold_accuracies": [
+          0.52,
+          0.53,
+          0.5,
+          0.54,
+          0.51
+        ],
+        "n": 500,
+        "flagged_above_80": false
+      },
+      "slang": {
+        "mean_accuracy": 0.782,
+        "ci_low": 0.7639999999999999,
+        "ci_high": 0.8019999999999999,
+        "fold_accuracies": [
+          0.82,
+          0.78,
+          0.76,
+          0.76,
+          0.79
+        ],
+        "n": 500,
+        "flagged_above_80": false
+      }
+    }
+  }
+}
