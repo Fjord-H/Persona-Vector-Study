@@ -43,6 +43,36 @@ def bootstrap_accuracy_ci(
     }
 
 
+def wilson_interval(successes: int, n: int, confidence: float = 0.95) -> dict:
+    """Closed-form Wilson score interval for a binomial proportion.
+
+    Preferred over the Wald interval at small N (sub-test B is N=24 pairs / 48 items)
+    because it never falls outside [0, 1] and has better coverage near 0 and 1.
+    z=1.96 is the two-tailed 95% critical value; pass confidence=0.95 for any other
+    level (only 0.95 is implemented here — raise if asked for something else).
+    """
+    if confidence != 0.95:
+        raise NotImplementedError("wilson_interval only implements 0.95 confidence")
+    if n <= 0:
+        raise ValueError(f"n must be positive, got {n}")
+    if not (0 <= successes <= n):
+        raise ValueError(f"successes={successes} out of range [0, {n}]")
+
+    z = 1.96
+    p_hat = successes / n
+    z2 = z * z
+    denom = 1.0 + z2 / n
+    centre = (p_hat + z2 / (2 * n)) / denom
+    margin = (z / denom) * ((p_hat * (1 - p_hat) / n + z2 / (4 * n * n)) ** 0.5)
+    return {
+        "accuracy": float(p_hat),
+        "wilson_low": float(max(0.0, centre - margin)),
+        "wilson_high": float(min(1.0, centre + margin)),
+        "successes": int(successes),
+        "n": int(n),
+    }
+
+
 def cis_overlap(a: dict, b: dict) -> bool:
     """True if two bootstrap_accuracy_ci results' CIs overlap at all — a quick check
     for whether an apparent "winner" is actually distinguishable, per spec requirement

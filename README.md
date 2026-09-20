@@ -22,7 +22,7 @@
 >
 > †length-flagged; pooling variant correlated with prompt length, treat as unreliable.
 >
-> **Key finding:** `qwen2.5-1.5b-instruct / chat / content_pole` holds 95.8% on sub-test B vs. TF-IDF's 85.4% — a meaningful gap in the right direction. The base model (`qwen2.5-1.5b`) collapses to 14.6% on the same pairs. This is one same-size, same-architecture base/instruct comparison — the controlled pair a confound-free test requires — and the result is *consistent with* instruction tuning producing more tone-invariant representations. It is not proof of a general RLHF effect: N=24 pairs, one model family, no mechanistic explanation for the mechanism. Raw formatting degrades generalization across all models; chat-template structure appears load-bearing, but this too is correlational.
+> **Key finding:** `qwen2.5-1.5b-instruct / chat / content_pole` holds 95.8% (23/24 pairs correct) on sub-test B vs. TF-IDF's 85.4% — a meaningful gap in the right direction. The base model (`qwen2.5-1.5b`) collapses to 14.6% on the same pairs. This is one same-size, same-architecture base/instruct comparison — the controlled pair a confound-free test requires — and the result is *consistent with* instruction tuning producing more tone-invariant representations. It is not proof of a general instruction-tuning effect: N=24 pairs, one model family, no mechanistic explanation for the mechanism. Raw formatting degrades generalization across all models; chat-template structure appears load-bearing, but this too is correlational.
 >
 > **What doesn't generalize:** neutral-origin distance (Method 3) collapses to 0% on sub-test B for nearly every model. It over-fits to the content distribution of sub-test A. Tone-pole (Method 1) is similarly unreliable on base models.
 >
@@ -1252,7 +1252,7 @@ docker run -p 8502:8502 persona-vectors-dashboard:v1
 **Mechanistic Understanding:**
 - Is Layer 0 actually optimal for base models, once evaluated honestly? (open --
   the original claim is retracted, see Known Issues #2, #4)
-- Does RLHF change where safety-relevant signal is computed, and if so how?
+- Does instruction tuning change where safety-relevant signal is computed, and if so how?
   (open -- the original claim is retracted, see Known Issues #6, #7)
 - Can we predict optimal layer from architecture?
 

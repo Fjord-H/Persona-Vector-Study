@@ -61,7 +61,7 @@ Activation methods reach 93–100% accuracy across models. So does TF-IDF at 93.
 
 †length-flagged result; treat as unreliable.
 
-The instruct model with chat formatting holds 95.8% accuracy on tone-varying pairs — 10 percentage points above TF-IDF on the same pairs. The base model (same architecture, same size, no RLHF) collapses to 14.6%. That's the controlled comparison this kind of claim requires — same model family, same parameter count, only the post-training differs — and the result is consistent with instruction tuning producing more tone-invariant representations. It is not proof: N=24 pairs, one model family, no mechanistic account of why. I state it as a suggestive, preliminary finding, not a general claim about RLHF.
+The instruct model with chat formatting holds 95.8% accuracy on tone-varying pairs — 10 percentage points above TF-IDF on the same pairs. The base model (same architecture, same size, no instruction tuning) collapses to 14.6%. That's the controlled comparison this kind of claim requires — same model family, same parameter count, only the post-training differs — and the result is consistent with instruction tuning producing more tone-invariant representations. It is not proof: N=24 pairs, one model family, no mechanistic account of why. I state it as a suggestive, preliminary finding, not a general claim about instruction tuning.
 
 Raw formatting degrades generalization across all models — the chat template structure (system prompt + user turn) appears load-bearing for building tone-invariant representations.
 
@@ -85,7 +85,7 @@ Raw formatting degrades generalization across all models — the chat template s
 ## Resume Bullets
 
 **For ML/research roles:**
-- Ran a controlled base-vs-instruct comparison (same architecture, same size) on transformer representation geometry: instruction-tuned Qwen2.5-1.5B holds 95.8% accuracy on tone-varying harmful content detection (vs. 85.4% TF-IDF baseline) while the base model collapses to 14.6% on identical pairs — a result consistent with an RLHF effect, reported with its N=24 sample-size caveat rather than overclaimed
+- Ran a controlled base-vs-instruct comparison (same architecture, same size) on transformer representation geometry: instruction-tuned Qwen2.5-1.5B holds 95.8% accuracy on tone-varying harmful content detection (vs. 85.4% TF-IDF baseline) while the base model collapses to 14.6% on identical pairs — a result consistent with an instruction-tuning effect, reported with its N=24 sample-size caveat rather than overclaimed
 - Built a from-scratch activation extraction pipeline across 5 LLMs (GPT-2, Qwen2.5, Llama-3.2), all layers, with frozen splits, bootstrap CIs, length-correlation flags, and random-direction null controls
 - Self-audited v1 study, identified and documented 12 methodological defects including training-set contamination and test-set-optimized thresholds; rebuilt pipeline from scratch to correct all defects
 
