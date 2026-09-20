@@ -15,12 +15,12 @@
 > | model | formatting | method | sub-test A | sub-test B | Wilson 95% CI | A/B gap |
 > |---|---|---|---|---|---|---|
 > | qwen2.5-1.5b-instruct | chat | content_pole | 97.4% | **95.8%** | [86.0%, 98.9%] | **1.5 pp** |
-> | llama-3.2-3b-instruct | chat | content_pole | 98.7% | 77.1% | [63.5%, 86.7%] | 21.6 pp |
+> | llama-3.2-3b-instruct§ | chat | content_pole | 98.7% | 77.1% | [63.5%, 86.7%] | 21.6 pp |
 > | gpt2-medium | raw | content_pole | 97.4% | 68.8% | [54.7%, 80.1%] | 28.6 pp |
 > | qwen2.5-1.5b | chat | content_pole | 90.8%† | 14.6%†‡ | [7.2%, 27.2%] | — |
 > | **TF-IDF baseline** | — | — | 93.4% | **85.4%** | [72.8%, 92.7%] | — |
 >
-> †length-flagged; pooling variant correlated with prompt length. ‡Threshold artifact, not score inversion — see AUROC note below.
+> †length-flagged; pooling variant correlated with prompt length. ‡Threshold artifact, not score inversion — see AUROC note below. §Pipeline provenance unverified — extraction manifest not in downloaded caches; number is from the original Kaggle run, not independently re-confirmed against the current frozen-split code.
 >
 > **Key finding:** `qwen2.5-1.5b-instruct / chat / content_pole` holds 95.8% (46/48 items correct; pair-level Wilson CI [74.2%, 97.7%], item-level [86.0%, 98.9%]) on sub-test B vs. TF-IDF's 85.4% (18/24 pairs correct; pair-level Wilson [55.1%, 88.0%]) — a directional gap. McNemar's test on the 48 sub-test B items gives p between 0.062 and 0.180 depending on the unknown count of discordant pairs (per-item instruct predictions unavailable due to a corrupted activation shard); not significant at 0.05. The gap is better read as relative error-rate scaling: TF-IDF's sub-test B error rate grows 2.2× from sub-test A (6.6% → 14.6%); content_pole's grows 1.6× (2.6% → 4.2%). The base model (`qwen2.5-1.5b`) collapses to 14.6% on the same pairs. This is one same-size, same-architecture base/instruct comparison — the controlled pair a confound-free test requires — and the result is *consistent with* instruction tuning producing more tone-invariant representations. It is not proof of a general instruction-tuning effect: N=24 pairs, one model family, no mechanistic explanation for the mechanism. Raw formatting degrades generalization across all models; chat-template structure appears load-bearing, but this too is correlational.
 >
