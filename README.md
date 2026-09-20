@@ -30,18 +30,6 @@
 >
 > **Conclusion:** The v2 pipeline is methodologically sound and the infrastructure is reusable. The primary claim — activation methods outperform surface-form baselines — is not supported on content-varying data. On tone-varying data, instruction-tuned models with chat formatting show a real advantage, but at N=24 the result is preliminary. See `Pipeline_v2/` for full pipeline code and `method_comparison_results.csv` for all reported numbers.
 
-> ## ⚠ Under Correction (August 2026)
->
-> A systematic audit of this repository found methodological defects that invalidate
-> all three of its headline claims. The findings below are **not** reliable results.
->
-> This repository remains public as a research record. Nothing has been deleted;
-> the original notebooks, artifacts, and text are preserved so the errors are
-> inspectable. See **[Known Issues](#known-issues-august-2026-audit)** for the full
-> list, and `defect_report.md` for evidence and reproduction steps.
->
-> A corrected v2 study was completed in September 2026. See the v2 section above for results. Findings from the audit will be published as a methodology paper.
-
 ## Abstract
 
 This project investigated whether transformer language models can detect
