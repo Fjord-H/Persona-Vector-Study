@@ -40,8 +40,7 @@
 > inspectable. See **[Known Issues](#known-issues-august-2026-audit)** for the full
 > list, and `defect_report.md` for evidence and reproduction steps.
 >
-> A corrected v2 study is in progress. Findings from the audit will be published as
-> a methodology paper.
+> A corrected v2 study was completed in September 2026. See the v2 section above for results. Findings from the audit will be published as a methodology paper.
 
 ## Abstract
 
@@ -1318,8 +1317,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Last Updated:** August 2026 (correction pass)  
-**Status:** Under correction -- all three headline claims retracted, see
+**Last Updated:** September 2026 (v2 complete)  
+**Status:** v2 study complete. v1 headline claims retracted -- see
 [Known Issues](#known-issues-august-2026-audit) and `defect_report.md`  
-**Next milestone:** v2 pipeline with corrected protocol; methodology paper
-from the audit findings
+**Next:** methodology paper from audit findings
