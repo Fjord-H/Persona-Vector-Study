@@ -93,8 +93,9 @@ Raw formatting degrades generalization across all models — chat-template struc
 ## Resume Bullets
 
 **For ML/research roles:**
-- Ran a controlled base-vs-instruct comparison (same architecture, same size) on transformer representation geometry: instruction-tuned Qwen2.5-1.5B holds 95.8% accuracy under A→B distribution shift (vs. 85.4% TF-IDF and 14.6% base model) — directional but not significant at N=24 pairs; threshold-free comparison (AUROC) shows TF-IDF and base-model activation methods at comparable discrimination (0.920 vs. 0.872–0.979), and the degradation is register-driven, not tone-driven as originally designed
-- Reported all small-sample results (N=24) with Wilson score intervals and explicit fraction-correct, not point estimates alone
+- Diagnosed an apparent activations-vs-baseline gap (95.8% vs. 85.4% accuracy) down to its actual mechanism using AUROC as a threshold-free comparison: found discrimination ability was statistically comparable (0.920 vs. 0.872–0.979) between methods, correctly attributing the accuracy difference to threshold-calibration transfer rather than overclaiming a representational advantage
+- Ran four rounds of self-directed external review on a negative result, each round narrowing the claim to what the data actually supported — including reversing an initial "tone-invariance" framing after diagnosing that a test set varied register and length alongside tone
+- Reported all small-sample results (N=24 pairs) with Wilson score intervals, McNemar significance testing, and explicit fraction-correct rather than point estimates alone
 - Built a from-scratch activation extraction pipeline across 5 LLMs (GPT-2, Qwen2.5, Llama-3.2), all layers, with frozen splits, bootstrap CIs, length-correlation flags, and random-direction null controls
 - Self-audited v1 study, identified and documented 12 methodological defects including training-set contamination and test-set-optimized thresholds; rebuilt pipeline from scratch to correct all defects
 
