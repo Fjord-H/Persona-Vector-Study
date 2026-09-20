@@ -12,23 +12,25 @@
 >
 > **Sub-test B neutral arm (tone-varying, content-fixed, N=24):** The picture changes by model and formatting:
 >
-> | model | formatting | method | sub-test A | sub-test B | A/B gap |
-> |---|---|---|---|---|---|
-> | qwen2.5-1.5b-instruct | chat | content_pole | 97.4% | **95.8%** | **1.5 pp** |
-> | llama-3.2-3b-instruct | chat | content_pole | 98.7% | 77.1% | 21.6 pp |
-> | gpt2-medium | raw | content_pole | 97.4% | 68.8% | 28.6 pp |
-> | qwen2.5-1.5b | chat | content_pole | 90.8%† | 14.6%† | — |
-> | **TF-IDF baseline** | — | — | 93.4% | **85.4%** | — |
+> | model | formatting | method | sub-test A | sub-test B | Wilson 95% CI | A/B gap |
+> |---|---|---|---|---|---|---|
+> | qwen2.5-1.5b-instruct | chat | content_pole | 97.4% | **95.8%** | [86.0%, 98.9%] | **1.5 pp** |
+> | llama-3.2-3b-instruct | chat | content_pole | 98.7% | 77.1% | [63.5%, 86.7%] | 21.6 pp |
+> | gpt2-medium | raw | content_pole | 97.4% | 68.8% | [54.7%, 80.1%] | 28.6 pp |
+> | qwen2.5-1.5b | chat | content_pole | 90.8%† | 14.6%†‡ | [7.2%, 27.2%] | — |
+> | **TF-IDF baseline** | — | — | 93.4% | **85.4%** | [72.8%, 92.7%] | — |
 >
-> †length-flagged; pooling variant correlated with prompt length, treat as unreliable.
+> †length-flagged; pooling variant correlated with prompt length. ‡Threshold artifact, not score inversion — see AUROC note below.
 >
-> **Key finding:** `qwen2.5-1.5b-instruct / chat / content_pole` holds 95.8% (23/24 pairs correct) on sub-test B vs. TF-IDF's 85.4% — a meaningful gap in the right direction. The base model (`qwen2.5-1.5b`) collapses to 14.6% on the same pairs. This is one same-size, same-architecture base/instruct comparison — the controlled pair a confound-free test requires — and the result is *consistent with* instruction tuning producing more tone-invariant representations. It is not proof of a general instruction-tuning effect: N=24 pairs, one model family, no mechanistic explanation for the mechanism. Raw formatting degrades generalization across all models; chat-template structure appears load-bearing, but this too is correlational.
+> **Key finding:** `qwen2.5-1.5b-instruct / chat / content_pole` holds 95.8% [86.0%, 98.9%] (23/24 pairs correct) on sub-test B vs. TF-IDF's 85.4% [72.8%, 92.7%] — a meaningful gap in the right direction. The base model (`qwen2.5-1.5b`) collapses to 14.6% on the same pairs. This is one same-size, same-architecture base/instruct comparison — the controlled pair a confound-free test requires — and the result is *consistent with* instruction tuning producing more tone-invariant representations. It is not proof of a general instruction-tuning effect: N=24 pairs, one model family, no mechanistic explanation for the mechanism. Raw formatting degrades generalization across all models; chat-template structure appears load-bearing, but this too is correlational.
+>
+> **AUROC and probe (second external review, September 2026):** For all base-model content_pole results, combined-arm AUROC (neutral+harmful, N=54) ranges 0.872–0.979 — the score direction is consistently correct. The qwen2.5-1.5b/chat 14.6% result is a threshold-transfer artifact: the midpoint threshold calibrated on sub-test A's validation set does not transfer to sub-test B's distribution, where hostile phrasing shifts neutral item scores above it (85.4% of neutral items predicted harmful). A logistic-regression probe trained on the same layer and pooling as content_pole (sub-test A train split, N=392) and evaluated on sub-test B's neutral arm reaches 70.8% [56.8%, 81.8%] vs. content_pole's 14.6% [7.2%, 27.2%] — the probe is more tone-robust because it learns a boundary in the activation space rather than inheriting a fixed midpoint threshold. Wilson 95% CIs throughout use the closed-form Wilson score interval (z=1.96); instruct-model CIs are computed from the Kaggle-reported accuracy counts; base-model CIs are verified locally against the downloaded activation cache.
 >
 > **What doesn't generalize:** neutral-origin distance (Method 3) collapses to 0% on sub-test B for nearly every model. It over-fits to the content distribution of sub-test A. Tone-pole (Method 1) is similarly unreliable on base models.
 >
 > **Caveat:** Sub-test B N=24 pairs. The 95.8% vs 85.4% gap is suggestive but not statistically distinguishable at this sample size. A sub-test B with N≥150 would be needed to confirm. Sub-test B v3 (lexically-controlled, N=5200) was built but not yet evaluated — the dataset is in `data/subtest_b_v3/`.
 >
-> **Known gaps (not yet done):** no logistic-regression probe on raw activations was run as a fourth method — only nearest-centroid-style methods (content_pole, neutral_origin, tone_pole) were compared, so a more expressive probe could still change the sub-test A picture. Results are reported as accuracy with bootstrap CIs, not recall/TPR at a fixed false-positive rate, which is what a deployment decision would actually need. Dataset sources are named in `data/*_MANIFEST.md` (HarmBench, hand-written neutral set, XSTest, OR-Bench) but no inline sample of ten examples per class is shown here.
+> **Known gaps:** A logistic-regression probe was evaluated on sub-test B (at the layer/pooling selected by content_pole — see AUROC note above), but not run as a full fourth method through sub-test A's validation-sweep pipeline; a probe with its own layer selection could still improve the sub-test A picture. Results are reported as accuracy with Wilson and bootstrap CIs, not recall/TPR at a fixed false-positive rate, which is what a deployment decision would actually need. Dataset sources are named in `data/*_MANIFEST.md` (HarmBench, hand-written neutral set, XSTest, OR-Bench) but no inline sample of ten examples per class is shown here.
 >
 > **Conclusion:** The v2 pipeline is methodologically sound and the infrastructure is reusable. The primary claim — activation methods outperform surface-form baselines — is not supported on content-varying data. On tone-varying data, one controlled instruct-vs-base comparison is suggestive but preliminary at N=24. See `Pipeline_v2/` for full pipeline code and `method_comparison_results.csv` for all reported numbers.
 >
