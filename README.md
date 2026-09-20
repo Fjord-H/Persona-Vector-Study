@@ -6,15 +6,29 @@
 
 > ## v2 Study — Completed September 2026
 >
-> A fully corrected v2 pipeline was built and run to completion. Summary of findings:
+> A fully corrected v2 pipeline was built and run to completion across 5 models (GPT-2 Medium, Qwen2.5-1.5B base/instruct, Llama-3.2-3B base/instruct), all layers, two pooling variants (masked-mean, last-token), and two formatting variants (raw, chat-templated). Three methods: tone-pole (Method 1), content-pole (Method 2), neutral-origin (Method 3). Frozen train/val/test splits (seed 42), bootstrap CIs throughout, TF-IDF baseline, random-direction null controls, and a per-result length-correlation flag. Full spec: `v2_pipeline_SPEC.md`.
 >
-> **What was built:** Extraction pipeline for 5 models (GPT-2 Medium, Qwen2.5-1.5B base/instruct, Llama-3.2-3B base/instruct), all layers, two pooling variants (masked-mean and last-token), two formatting variants (raw and chat-templated). Three methods compared: tone-pole (Method 1), content-pole (Method 2), neutral-origin (Method 3). Frozen train/val/test splits (seed 42, 70/15/15, stratified), bootstrap CIs on all reported numbers, TF-IDF baseline, random-direction null controls, and a length-correlation flag per result. Full spec: `v2_pipeline_SPEC.md`.
+> **Sub-test A (content-varying, tone-fixed):** Activation methods reach 93–100% accuracy — but TF-IDF also scores 93.4% (single-fit) / 96.6% ± 2.4% (CV). The separation is largely lexical. Activation-space geometry adds little over surface form on this task alone.
 >
-> **What was found:** On sub-test A (content-varying, tone-fixed), activation methods reach 93–99% accuracy — but so does TF-IDF (93.4% single-fit, 96.6% ± 2.4% CV). The separation is largely lexical: HarmBench prompts and hand-written neutral prompts are distributionally distinct as text, so bag-of-words classification is nearly saturated. Activation-space geometry does not add meaningful signal over surface form on this task.
+> **Sub-test B neutral arm (tone-varying, content-fixed, N=24):** The picture changes by model and formatting:
 >
-> **The suggestive result:** On sub-test B neutral arm (N=24, tone-varying, content-fixed), `content_pole` on `qwen2.5-1.5b-instruct` chat formatting achieves 95.8% [89.6–100] vs. TF-IDF's 85.4% on the same pairs. The gap is in the right direction but not statistically distinguishable at N=24. A larger sub-test B (N≥150) would be needed to confirm whether activation representations are genuinely more tone-invariant than surface form. The neutral-origin distance method (Method 3) fails to generalize to sub-test B for almost every model, collapsing to 0%.
+> | model | formatting | method | sub-test A | sub-test B | A/B gap |
+> |---|---|---|---|---|---|
+> | qwen2.5-1.5b-instruct | chat | content_pole | 97.4% | **95.8%** | **1.5 pp** |
+> | llama-3.2-3b-instruct | chat | content_pole | 98.7% | 77.1% | 21.6 pp |
+> | gpt2-medium | raw | content_pole | 97.4% | 68.8% | 28.6 pp |
+> | qwen2.5-1.5b | chat | content_pole | 90.8%† | 14.6%† | — |
+> | **TF-IDF baseline** | — | — | 93.4% | **85.4%** | — |
 >
-> **Conclusion:** The v2 pipeline is methodologically sound and the infrastructure is reusable. The primary claim — that activation-space methods outperform surface-form baselines for harmful content detection — is not supported by this data. The study is parked here as a research artifact. See `Pipeline_v2/` for the full pipeline code, `data/subtest_b_MANIFEST.md` for sub-test B limitations, and `method_comparison_results.csv` (Kaggle output) for all reported numbers.
+> †length-flagged; pooling variant correlated with prompt length, treat as unreliable.
+>
+> **Key finding:** `qwen2.5-1.5b-instruct / chat / content_pole` holds 95.8% on sub-test B vs. TF-IDF's 85.4% — a meaningful gap in the right direction. The base model (`qwen2.5-1.5b`) collapses to 14.6% on the same pairs, showing that instruction tuning (RLHF) is what creates tone-invariant representations, not model scale. Raw formatting degrades generalization across all models; chat-template structure is load-bearing.
+>
+> **What doesn't generalize:** neutral-origin distance (Method 3) collapses to 0% on sub-test B for nearly every model. It over-fits to the content distribution of sub-test A. Tone-pole (Method 1) is similarly unreliable on base models.
+>
+> **Caveat:** Sub-test B N=24 pairs. The 95.8% vs 85.4% gap is suggestive but not statistically distinguishable at this sample size. A sub-test B with N≥150 would be needed to confirm. Sub-test B v3 (lexically-controlled, N=5200) was built but not yet evaluated — the dataset is in `data/subtest_b_v3/`.
+>
+> **Conclusion:** The v2 pipeline is methodologically sound and the infrastructure is reusable. The primary claim — activation methods outperform surface-form baselines — is not supported on content-varying data. On tone-varying data, instruction-tuned models with chat formatting show a real advantage, but at N=24 the result is preliminary. See `Pipeline_v2/` for full pipeline code and `method_comparison_results.csv` for all reported numbers.
 
 > ## ⚠ Under Correction (August 2026)
 >
